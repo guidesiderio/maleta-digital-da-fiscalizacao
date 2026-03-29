@@ -266,3 +266,39 @@
 .modal-title-text { font-family:'Playfair Display',serif; font-size:15px; color:#e8d098; margin-bottom:3px; padding-right:22px; }
 .modal-sep { border:none; border-top:1px solid #3a2810; margin:12px 0; }
 .empty-msg { text-align:center; color:#5a3e1a; font-size:11px; padding:20px 0; font-style:italic; }
+
+.doc-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #2a1e10;
+}
+.doc-item:last-child { border-bottom: none; }
+.doc-title {
+  display: block;
+  color: #c49642;
+  font-size: 12px;
+  text-decoration: none;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+.doc-title:hover { color: #e8d098; text-decoration: underline; }
+.doc-desc {
+  color: #7a5a28;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .wrap { padding: 16px 10px 20px; min-height: auto; }
+  .lid-title { font-size: 18px; }
+  .lid-sub { font-size: 8px; }
+  .folders-row { gap: 7px; }
+  .folder { max-width: none; }
+  .f-num { font-size: 22px; }
+  .f-name { font-size: 8px; }
+  .f-body { min-height: 76px; padding: 10px 4px 8px; }
+  .base { padding: 14px 10px 14px; }
+  .modal-box { padding: 16px 14px 14px; max-height: 70vh; }
+  .modal-num { font-size: 18px; }
+  .modal-title-text { font-size: 13px; }
+  .open-btn { margin-top: 14px; padding: 8px 20px; font-size: 10px; }
+}
