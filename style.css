@@ -1,6 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Courier+Prime:wght@400;700&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
 
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a1008;
+  padding: 32px 16px;
+}
+
 .wrap {
   background: #2a1e10;
   background-image:
@@ -9,12 +22,11 @@
   border-radius: 14px;
   padding: 28px 20px 32px;
   font-family: 'Courier Prime', monospace;
-  overflow: hidden;
-  min-height: 540px;
+  width: 100%;
+  max-width: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 .scene {
@@ -22,11 +34,13 @@
   max-width: 740px;
   perspective: 1100px;
   position: relative;
+  transform-style: preserve-3d;
 }
 
 .case-wrap {
   position: relative;
   width: 100%;
+  transform-style: preserve-3d;
 }
 
 .handle-outer {
@@ -60,6 +74,7 @@
   position: relative;
   z-index: 5;
   backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 
 .lid.opened {
@@ -230,17 +245,20 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background 0.18s, color 0.18s;
+  position: relative;
+  z-index: 10;
 }
 .open-btn:hover { background: #4a3010; color: #e8d098; }
 .open-btn:disabled { opacity: 0.35; cursor: default; }
 
 .modal-overlay {
   display: none;
-  position: absolute;
-  inset: 0; border-radius: 0 0 14px 14px;
-  background: rgba(10,6,2,0.9);
-  z-index: 20;
-  align-items: center; justify-content: center;
+  position: fixed;
+  inset: 0;
+  background: rgba(10,6,2,0.85);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
 }
 .modal-overlay.open { display: flex; }
 .modal-box {
@@ -249,7 +267,7 @@
   padding: 22px 20px 18px; position: relative;
   animation: popIn 0.26s cubic-bezier(.4,0,.2,1);
   font-family: 'Courier Prime', monospace;
-  max-height: 320px; overflow-y: auto;
+  max-height: 80vh; overflow-y: auto;
 }
 @keyframes popIn {
   from{opacity:0;transform:scale(0.94) translateY(10px)}
@@ -288,7 +306,8 @@
 }
 
 @media (max-width: 600px) {
-  .wrap { padding: 16px 10px 20px; min-height: auto; }
+  body { padding: 16px 10px; }
+  .wrap { padding: 16px 10px 20px; }
   .lid-title { font-size: 18px; }
   .lid-sub { font-size: 8px; }
   .folders-row { gap: 7px; }
@@ -297,7 +316,7 @@
   .f-name { font-size: 8px; }
   .f-body { min-height: 76px; padding: 10px 4px 8px; }
   .base { padding: 14px 10px 14px; }
-  .modal-box { padding: 16px 14px 14px; max-height: 70vh; }
+  .modal-box { padding: 16px 14px 14px; max-height: 80vh; }
   .modal-num { font-size: 18px; }
   .modal-title-text { font-size: 13px; }
   .open-btn { margin-top: 14px; padding: 8px 20px; font-size: 10px; }
