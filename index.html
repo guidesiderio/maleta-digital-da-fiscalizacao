@@ -1,51 +1,64 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maleta Digital da Fiscalização</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<div class="wrap">
-  <div class="scene">
-    <div class="case-wrap">
-      <div class="handle-outer"><div class="handle"></div></div>
-
-      <div class="lid" id="lid">
-        <div class="lid-title">Fiscalização</div>
-        <div class="lid-sub">Maleta Digital · Documentos Oficiais</div>
-        <div class="lid-latch" id="latch"></div>
-        <div class="lid-hinges">
-          <div class="hinge"></div>
-          <div class="hinge"></div>
-        </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maleta Digital da Fiscalização</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="inst-header">
+      <img
+        id="logo-institucional"
+        src="assets/159ad273727527.Y3JvcCwxNjI3LDEyNzIsMCww.png"
+        alt="Logo"
+        class="inst-logo"
+      />
+      <div class="inst-info">
+        <div class="inst-organ">Universidade Federal do Piauí — UFPI</div>
+        <div class="inst-sector">Departamento de Fiscalização de Contratos</div>
       </div>
+    </header>
 
-      <div class="base" id="base">
-        <div class="folders-row" id="foldersRow"></div>
-        <div class="base-footer">
-          <span>Departamento de Fiscalização</span>
-          <span>v1.0 · 2026</span>
-        </div>
-        <div class="modal-overlay" id="modalOv">
-          <div class="modal-box">
-            <button class="modal-close-btn" id="mClose">✕</button>
-            <div class="modal-num" id="mNum"></div>
-            <div class="modal-title-text" id="mTitle"></div>
-            <hr class="modal-sep">
-            <div id="mContent"></div>
+    <div class="wrap">
+      <div class="scene">
+        <div class="case-wrap">
+          <div class="handle-outer"><div class="handle"></div></div>
+
+          <div class="lid" id="lid">
+            <div class="lid-title">Fiscalização</div>
+            <div class="lid-acervo">
+              Acervo digital de documentos oficiais do Departamento de Fiscalização
+            </div>
+            <div class="lid-sub">Maleta Digital · Documentos Oficiais</div>
+            <div class="lid-latch" id="latch"></div>
+            <div class="lid-hinges">
+              <div class="hinge"></div>
+              <div class="hinge"></div>
+            </div>
+          </div>
+
+          <div class="base" id="base">
+            <div class="folders-row" id="foldersRow"></div>
+            <div class="modal-overlay" id="modalOv">
+              <div class="modal-box">
+                <button class="modal-close-btn" id="mClose">✕</button>
+                <div class="modal-num" id="mNum"></div>
+                <div class="modal-title-text" id="mTitle"></div>
+                <hr class="modal-sep" />
+                <div id="mContent"></div>
+              </div>
+            </div>
           </div>
         </div>
+
+        <button class="open-btn" id="openBtn">&#9654; Abrir maleta</button>
       </div>
     </div>
 
-    <button class="open-btn" id="openBtn">&#9654; Abrir maleta</button>
-  </div>
-</div>
+    <footer class="page-footer" id="pageFooter"></footer>
 
-<script src="data.js"></script>
-<script src="script.js"></script>
-</body>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>

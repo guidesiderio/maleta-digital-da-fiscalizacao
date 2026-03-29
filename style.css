@@ -5,13 +5,47 @@ html {
   min-height: 100%;
 }
 
+.inst-header {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 24px;
+  background: #1e1408;
+  border: 1px solid #3a2810;
+  border-radius: 10px 10px 0 0;
+  margin-bottom: 0;
+}
+.inst-logo {
+  height: 48px;
+  width: auto;
+  flex-shrink: 0;
+  opacity: 0.85;
+  border-radius: 4px;
+}
+.inst-info { display: flex; flex-direction: column; gap: 3px; }
+.inst-organ {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  color: #e8d098;
+  letter-spacing: 0.04em;
+}
+.inst-sector {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  color: #7a5a28;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
 body {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
   background: #1a1008;
-  padding: 32px 16px;
+  padding: 0 16px 40px;
 }
 
 .wrap {
@@ -19,7 +53,9 @@ body {
   background-image:
     repeating-linear-gradient(90deg, rgba(0,0,0,0.07) 0px, rgba(0,0,0,0.07) 1px, transparent 1px, transparent 28px),
     repeating-linear-gradient(0deg, rgba(0,0,0,0.07) 0px, rgba(0,0,0,0.07) 1px, transparent 1px, transparent 28px);
-  border-radius: 14px;
+  border-radius: 0 0 14px 14px;
+  border: 1px solid #3a2810;
+  border-top: none;
   padding: 28px 20px 32px;
   font-family: 'Courier Prime', monospace;
   width: 100%;
@@ -27,6 +63,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 0;
 }
 
 .scene {
@@ -86,6 +123,15 @@ body {
   font-size: 26px;
   color: #e8d098;
   letter-spacing: 0.1em;
+}
+.lid-acervo {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  color: #9a7a3a;
+  letter-spacing: 0.1em;
+  margin-top: 7px;
+  padding: 0 16px;
+  line-height: 1.5;
 }
 .lid-sub {
   font-size: 10px;
@@ -217,6 +263,13 @@ body {
   color: #c8a86a; margin-top: 8px;
   font-family: 'Courier Prime', monospace;
 }
+.f-count {
+  font-family: 'Courier Prime', monospace;
+  font-size: 8px;
+  color: rgba(0,0,0,0.45);
+  letter-spacing: 0.05em;
+  margin-top: 4px;
+}
 
 .c1 .f-tab{background:#b8894a}.c1 .f-body{background:#cc9a52}.c1 .f-num{color:#6b4812}
 .c2 .f-tab{background:#5e7a52}.c2 .f-body{background:#6d8e60}.c2 .f-num{color:#2e4a24}
@@ -305,9 +358,33 @@ body {
   line-height: 1.5;
 }
 
+.page-footer {
+  width: 100%;
+  max-width: 800px;
+  padding: 14px 24px;
+  background: #1e1408;
+  border: 1px solid #3a2810;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 20px;
+  font-family: 'Courier Prime', monospace;
+  font-size: 8px;
+  color: #5a3e1a;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.page-footer span { line-height: 1.6; }
+
 @media (max-width: 600px) {
-  body { padding: 16px 10px; }
+  body { padding: 0 10px 24px; }
   .wrap { padding: 16px 10px 20px; }
+  .inst-header { padding: 10px 14px; gap: 10px; }
+  .inst-organ { font-size: 11px; }
+  .inst-sector { font-size: 8px; }
+  .page-footer { flex-direction: column; gap: 4px; align-items: flex-start; font-size: 7px; padding: 10px 14px; }
   .lid-title { font-size: 18px; }
   .lid-sub { font-size: 8px; }
   .folders-row { gap: 7px; }
