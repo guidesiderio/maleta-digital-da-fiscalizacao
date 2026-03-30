@@ -67,6 +67,11 @@ btn.addEventListener("click", () => {
     btn.disabled = false;
     btn.textContent = "↺ Fechar maleta";
   }, 820);
+
+  // Oculta o lid após a transição CSS (0.9s) para evitar sobreposição fantasma
+  setTimeout(() => {
+    lid.style.visibility = "hidden";
+  }, 900);
 });
 
 function resetCase() {
@@ -75,6 +80,8 @@ function resetCase() {
     el.classList.remove("visible");
     el.setAttribute("tabindex", "-1");
   });
+  // Restaura visibilidade antes da animação de fechamento
+  lid.style.visibility = "visible";
   setTimeout(() => {
     lid.classList.remove("opened");
     btn.textContent = "▶ Abrir maleta";

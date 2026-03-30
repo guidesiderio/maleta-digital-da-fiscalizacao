@@ -1,23 +1,21 @@
 /* ─── Fonts ─────────────────────────────────────────────────────────────────
-   Noto Serif  → Display / Headlines  (DESIGN.md §3)
-   Work Sans   → Body / Titles        (DESIGN.md §3)
-   Space Grotesk → Labels / Metadata  (DESIGN.md §3)
+   Noto Serif    → Display / Headlines  (DESIGN.md §3)
+   Work Sans     → Body / Titles        (DESIGN.md §3)
+   Space Grotesk → Labels / Metadata    (DESIGN.md §3)
 ──────────────────────────────────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap');
 
 /* ─── Design Tokens (DESIGN.md §2) ──────────────────────────────────────────
-   surface/background  : #210e0b   Dark Wood base
+   surface              : #210e0b  Dark Wood base
    surface-container-low: #2b1613
    surface-container    : #3a1f1a
-   surface-container-high: #472f2b
-   primary             : #e3c199   Beige/Tan
-   secondary           : #c5caa8   Muted Green
-   tertiary            : #e1c296   Pale Yellow
-   ghost-border        : rgba(227,193,153,0.15)  (outline_variant @ 15%)
+   surface-container-high:#472f2b
+   primary              : #e3c199  Beige/Tan
+   primary-dark         : #c49642
+   ghost-border         : rgba(227,193,153,0.15)
 ──────────────────────────────────────────────────────────────────────────── */
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { min-height: 100%; }
 
 /* ─── Page Layout ─────────────────────────────────────────────────────────── */
@@ -27,7 +25,7 @@ body {
   flex-direction: column;
   align-items: center;
   background: #210e0b;
-  padding: 32px 16px 48px;
+  padding: 40px 16px 56px;
   font-family: 'Work Sans', sans-serif;
 }
 
@@ -37,27 +35,38 @@ body {
   max-width: 800px;
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 18px 28px;
+  gap: 18px;
+  padding: 20px 28px 20px 26px;
   background: #1c0d09;
-  /* Ghost border per No-Line rule — tonal shift as primary boundary */
   border-bottom: 1px solid rgba(227, 193, 153, 0.1);
   border-radius: 12px 12px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+/* Gold institutional accent stripe on left edge */
+.inst-header::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #f0d698 0%, #c49642 50%, #a07828 100%);
+  border-radius: 12px 0 0 0;
 }
 .inst-logo {
   height: 48px;
   width: auto;
   flex-shrink: 0;
-  opacity: 0.8;
+  opacity: 0.88;
   border-radius: 4px;
 }
-.inst-info { display: flex; flex-direction: column; gap: 5px; }
+.inst-info { display: flex; flex-direction: column; gap: 6px; }
 .inst-organ {
   font-family: 'Noto Serif', serif;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   color: #e3c199;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
 }
 .inst-sector {
   font-family: 'Space Grotesk', sans-serif;
@@ -72,173 +81,231 @@ body {
 .wrap {
   background: #2b1613;
   background-image:
-    repeating-linear-gradient(90deg, rgba(0,0,0,0.055) 0px, rgba(0,0,0,0.055) 1px, transparent 1px, transparent 32px),
-    repeating-linear-gradient(0deg,  rgba(0,0,0,0.055) 0px, rgba(0,0,0,0.055) 1px, transparent 1px, transparent 32px);
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.05) 0px, rgba(0,0,0,0.05) 1px, transparent 1px, transparent 32px),
+    repeating-linear-gradient(0deg,  rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 32px);
   border-radius: 0;
-  /* Ghost borders — lateral grain lines only, no top/bottom (header/footer handle those) */
   border-left:  1px solid rgba(227, 193, 153, 0.07);
   border-right: 1px solid rgba(227, 193, 153, 0.07);
-  padding: 32px 24px 36px;
+  padding: 36px 24px 40px;
   width: 100%;
   max-width: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Ambient depth — DESIGN.md §4: ultra-diffused, tinted umber */
   box-shadow:
-    0 32px 80px rgba(33, 14, 11, 0.72),
-    0  4px 16px rgba(33, 14, 11, 0.45);
+    0 40px 100px rgba(33, 14, 11, 0.75),
+    0  4px  20px rgba(33, 14, 11, 0.5);
 }
 
-/* ─── Scene / Briefcase ───────────────────────────────────────────────────── */
+/* ─── Scene / 3D Container ────────────────────────────────────────────────── */
 .scene {
   width: 100%;
-  max-width: 740px;
+  max-width: 720px;
   perspective: 1100px;
   position: relative;
   transform-style: preserve-3d;
 }
-
 .case-wrap {
   position: relative;
   width: 100%;
   transform-style: preserve-3d;
+  overflow: hidden;
 }
 
-/* Handle */
+/* ─── Handle ──────────────────────────────────────────────────────────────── */
 .handle-outer {
   display: flex;
   justify-content: center;
-  margin-bottom: 0;
   position: relative;
   z-index: 10;
 }
 .handle {
-  width: 110px;
-  height: 24px;
-  /* Ghost border instead of opaque stroke */
-  border: 2px solid rgba(227, 193, 153, 0.18);
+  width: 100px;
+  height: 28px;
+  background: linear-gradient(180deg,
+    #5a3a2e 0%, #3e2418 40%, #4a2e1e 70%, #3a2218 100%);
+  border: 2px solid rgba(227, 193, 153, 0.2);
   border-bottom: none;
-  border-radius: 14px 14px 0 0;
-  background: #472f2b; /* surface-container-high */
+  border-radius: 18px 18px 0 0;
+  position: relative;
+  box-shadow:
+    inset 0 2px 6px rgba(255, 255, 255, 0.04),
+    inset 0 -3px 8px rgba(0, 0, 0, 0.35),
+    0 -2px 8px rgba(0, 0, 0, 0.3);
+}
+/* Grip line */
+.handle::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px; height: 4px;
+  background: rgba(0, 0, 0, 0.22);
+  border-radius: 2px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
-/* Lid */
+/* ─── Lid ─────────────────────────────────────────────────────────────────── */
 .lid {
   width: 100%;
-  background: #3a1f1a; /* surface-container */
+  background: #3a1f1a;
   background-image: repeating-linear-gradient(180deg,
-    rgba(255,255,255,0.018) 0px,
-    rgba(255,255,255,0.018) 1px,
+    rgba(255, 255, 255, 0.016) 0px,
+    rgba(255, 255, 255, 0.016) 1px,
     transparent 1px,
-    transparent 6px);
-  /* Ghost border — DESIGN.md §4 "Ghost Border" fallback */
+    transparent 5px);
   border: 1px solid rgba(227, 193, 153, 0.13);
+  border-top-color: rgba(227, 193, 153, 0.28); /* stronger top-edge highlight */
   border-bottom: none;
-  border-radius: 10px 10px 0 0;
-  padding: 28px 0 22px;
+  border-radius: 12px 12px 0 0;
+  padding: 32px 0 26px;
   text-align: center;
   transform-origin: bottom center;
   transform: rotateX(0deg);
-  transition: transform 0.9s cubic-bezier(.4,0,.2,1);
+  transition: transform 0.9s cubic-bezier(.4, 0, .2, 1);
   position: relative;
   z-index: 5;
   backface-visibility: hidden;
   transform-style: preserve-3d;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.04),   /* inner top light */
+    inset 0 -6px 16px rgba(0, 0, 0, 0.22);     /* inner bottom depth */
 }
 .lid.opened { transform: rotateX(-118deg); }
 
+/* Inner corner reinforcement detail */
+.lid::before {
+  content: '';
+  position: absolute;
+  top: 6px; left: 6px; right: 6px; bottom: 0;
+  border: 1px solid rgba(227, 193, 153, 0.06);
+  border-radius: 8px 8px 0 0;
+  pointer-events: none;
+}
+
 /* ─── Lid Typography ──────────────────────────────────────────────────────── */
-/* DESIGN.md §3: Display title → Noto Serif, display-lg (3.5rem) */
 .lid-title {
   font-family: 'Noto Serif', serif;
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: 700;
   color: #e3c199;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   line-height: 1;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
 }
-/* Subtitle — Work Sans body, muted primary */
 .lid-acervo {
   font-family: 'Work Sans', sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 400;
-  color: rgba(227, 193, 153, 0.55);
+  color: rgba(227, 193, 153, 0.58);
   letter-spacing: 0.06em;
-  margin-top: 12px;
-  padding: 0 24px;
-  line-height: 1.65;
+  margin-top: 14px;
+  padding: 0 32px;
+  line-height: 1.7;
 }
-/* Stamp metadata — Space Grotesk, uppercase, slight rotation = "hand-stamped" */
 .lid-sub {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 8px;
   font-weight: 500;
-  color: rgba(227, 193, 153, 0.28);
-  letter-spacing: 0.28em;
+  color: rgba(227, 193, 153, 0.3);
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  margin-top: 10px;
+  margin-top: 12px;
   display: inline-block;
-  transform: rotate(-0.4deg); /* DESIGN.md §5 stamped metadata */
+  transform: rotate(-0.4deg); /* hand-stamped feel — DESIGN.md §5 */
 }
 
-/* Latch & hinges — gradient per §5 Glass & Gradient Rule */
+/* ─── Latch ───────────────────────────────────────────────────────────────── */
 .lid-latch {
   position: absolute;
   bottom: -1px;
   left: 50%;
   transform: translateX(-50%);
-  width: 40px;
-  height: 16px;
-  background: linear-gradient(180deg, #e3c199 0%, #c49642 100%);
-  border-radius: 4px 4px 0 0;
-  border: 1px solid rgba(227, 193, 153, 0.25);
+  width: 58px;
+  height: 24px;
+  background: linear-gradient(180deg,
+    #f0d698 0%, #d4a830 55%, #9e7620 100%);
+  border-radius: 6px 6px 0 0;
+  border: 1px solid rgba(227, 193, 153, 0.42);
   border-bottom: none;
-  transition: filter 0.3s;
+  box-shadow:
+    0 -3px 12px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.25);
+  transition: filter 0.25s;
 }
-.lid-latch:hover { filter: brightness(1.12); }
+.lid-latch:hover { filter: brightness(1.1); }
+/* Latch shine strip */
+.lid-latch::before {
+  content: '';
+  position: absolute;
+  top: 4px; left: 50%; transform: translateX(-50%);
+  width: 32px; height: 2px;
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 1px;
+}
+/* Latch keyhole */
 .lid-latch::after {
   content: '';
   display: block;
-  width: 14px; height: 7px;
-  background: rgba(33, 14, 11, 0.35);
-  border-radius: 2px;
-  margin: 5px auto 0;
+  width: 10px; height: 10px;
+  background: rgba(33, 14, 11, 0.5);
+  border-radius: 50%;
+  margin: 7px auto 0;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.7);
 }
 
+/* ─── Hinges ──────────────────────────────────────────────────────────────── */
 .lid-hinges {
   position: absolute;
-  bottom: -4px; left: 0; right: 0;
+  bottom: -5px; left: 0; right: 0;
   display: flex;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 28px;
   pointer-events: none;
   z-index: 8;
 }
 .hinge {
-  width: 20px; height: 10px;
-  background: linear-gradient(180deg, #e3c199 0%, #c49642 100%);
-  border-radius: 0 0 4px 4px;
-  border: 1px solid rgba(227, 193, 153, 0.25);
+  width: 28px; height: 14px;
+  background: linear-gradient(180deg,
+    #f0d698 0%, #d4a830 55%, #9e7620 100%);
+  border-radius: 0 0 6px 6px;
+  border: 1px solid rgba(227, 193, 153, 0.4);
   border-top: none;
+  position: relative;
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.45),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+}
+/* Hinge screw detail */
+.hinge::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f4df94, #9e7620);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.55);
 }
 
-/* Base / briefcase interior */
+/* ─── Base / Briefcase Interior ───────────────────────────────────────────── */
 .base {
   width: 100%;
-  background: #2b1613; /* surface-container-low */
+  background: #2b1613;
   background-image: repeating-linear-gradient(180deg,
-    rgba(255,255,255,0.018) 0px,
-    rgba(255,255,255,0.018) 1px,
+    rgba(255, 255, 255, 0.016) 0px,
+    rgba(255, 255, 255, 0.016) 1px,
     transparent 1px,
-    transparent 6px);
+    transparent 5px);
   border: 1px solid rgba(227, 193, 153, 0.13);
   border-top: none;
   border-radius: 0 0 14px 14px;
   padding: 28px 24px 24px;
   position: relative;
   z-index: 4;
-  min-height: 230px;
+  min-height: 240px;
+  box-shadow: inset 0 6px 20px rgba(0, 0, 0, 0.3); /* depth inside briefcase */
 }
 
 /* ─── Folders ─────────────────────────────────────────────────────────────── */
@@ -250,94 +317,127 @@ body {
 
 .folder {
   flex: 1;
-  max-width: 128px;
+  max-width: 124px;
   cursor: pointer;
   position: relative;
   opacity: 0;
   transform: translateY(28px);
-  transition: opacity 0.38s, transform 0.38s cubic-bezier(.4,0,.2,1);
+  transition: opacity 0.38s, transform 0.38s cubic-bezier(.4, 0, .2, 1),
+              filter 0.22s;
   touch-action: manipulation;
 }
 .folder.visible { opacity: 1; transform: translateY(0); }
-.folder:hover { transform: translateY(-7px) !important; }
-.folder:hover .f-tab { transform: translateY(-3px) rotate(-2deg); }
-.folder:hover .f-paper  { height: 20px; opacity: 1; }
-.folder:hover .f-paper2 { height: 26px; opacity: 0.65; }
-
-.f-tab {
-  width: 50%; height: 13px;
-  border-radius: 5px 5px 0 0;
-  margin-left: 8px;
-  position: relative; z-index: 3;
-  transition: transform 0.2s cubic-bezier(.4,0,.2,1);
+.folder:hover {
+  transform: translateY(-10px) !important;
+  filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.55));
 }
+.folder:active { transform: translateY(-4px) !important; }
+.folder:hover .f-tab { transform: translateY(-4px) rotate(-2.5deg); }
+.folder:hover .f-paper  { height: 22px; opacity: 1; }
+.folder:hover .f-paper2 { height: 30px; opacity: 0.65; }
+
+/* Tab */
+.f-tab {
+  width: 48%; height: 14px;
+  border-radius: 6px 6px 0 0;
+  margin-left: 10px;
+  position: relative; z-index: 3;
+  transition: transform 0.22s cubic-bezier(.4, 0, .2, 1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+/* Papers peeking out */
 .f-paper {
   position: absolute;
   bottom: calc(100% - 2px);
-  left: 10%; right: 10%;
+  left: 8%; right: 8%;
   height: 0; background: #f0e8cc;
   border-radius: 3px 3px 0 0;
   z-index: 1; opacity: 0;
-  transition: height 0.22s cubic-bezier(.4,0,.2,1), opacity 0.22s;
+  transition: height 0.22s cubic-bezier(.4, 0, .2, 1), opacity 0.22s;
 }
 .f-paper2 {
   position: absolute;
   bottom: calc(100% - 2px);
-  left: 5%; right: 5%;
+  left: 4%; right: 4%;
   height: 0; background: #e0d8b8;
   border-radius: 3px 3px 0 0;
   z-index: 0; opacity: 0;
-  transition: height 0.26s 0.04s cubic-bezier(.4,0,.2,1), opacity 0.26s 0.04s;
+  transition: height 0.28s 0.04s cubic-bezier(.4, 0, .2, 1), opacity 0.28s 0.04s;
 }
+
+/* Folder body */
 .f-body {
-  border-radius: 2px 6px 6px 6px;
-  padding: 16px 8px 14px;
+  border-radius: 2px 8px 8px 8px;
+  padding: 16px 10px 16px;
   display: flex; flex-direction: column;
-  align-items: center; gap: 4px;
-  min-height: 104px; justify-content: center;
+  align-items: center; gap: 5px;
+  min-height: 120px; justify-content: center;
   position: relative; z-index: 2;
   transition: filter 0.18s;
+  box-shadow:
+    inset 0 3px 10px rgba(0, 0, 0, 0.2),        /* top inner depth */
+    inset 0 -1px 3px rgba(255, 255, 255, 0.07);  /* subtle bottom light */
 }
-.folder:hover .f-body { filter: brightness(1.1); }
+.folder:hover .f-body { filter: brightness(1.08); }
 
-/* Folder number — Noto Serif display */
+/* Folder number */
 .f-num {
   font-family: 'Noto Serif', serif;
-  font-size: 30px; font-weight: 700; line-height: 1;
+  font-size: 34px; font-weight: 700; line-height: 1;
 }
-/* Folder label — Space Grotesk "stamped" per §5 */
+
+/* Doc counter badge */
+.f-count {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.04em;
+  background: rgba(0, 0, 0, 0.13);
+  padding: 2px 7px;
+  border-radius: 10px;
+  margin-top: 1px;
+}
+
+/* Folder label */
 .f-name {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 8px;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   text-align: center;
   line-height: 1.5;
   min-height: 24px;
-  color: rgba(227, 193, 153, 0.65);
-  margin-top: 8px;
-}
-/* Doc counter */
-.f-count {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 9px;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.52);
-  letter-spacing: 0.06em;
-  margin-top: 2px;
+  color: rgba(227, 193, 153, 0.72);
+  margin-top: 10px;
 }
 
-/* ─── Folder Colors — five muted tones per DESIGN.md §5 ──────────────────────
-   Tan (#e3c199), Muted Green (#c5caa8), Light Brown, Grey-Brown, Pale Yellow
+/* ─── Folder Colors — five muted tones with subtle gradients ─────────────────
+   Tan / Muted Green / Light Brown / Grey-Brown / Pale Yellow
 ──────────────────────────────────────────────────────────────────────────── */
-.c1 .f-tab { background: #c8a46c } .c1 .f-body { background: #d4b07a } .c1 .f-num { color: #5c3c12 }
-.c2 .f-tab { background: #96aa84 } .c2 .f-body { background: #a4b892 } .c2 .f-num { color: #344828 }
-.c3 .f-tab { background: #b49068 } .c3 .f-body { background: #c09c76 } .c3 .f-num { color: #543618 }
-.c4 .f-tab { background: #a09282 } .c4 .f-body { background: #ac9e8e } .c4 .f-num { color: #463830 }
-.c5 .f-tab { background: #c4b86e } .c5 .f-body { background: #d0c47c } .c5 .f-num { color: #524818 }
+.c1 .f-tab  { background: linear-gradient(180deg, #d4b47c 0%, #c09060 100%) }
+.c1 .f-body { background: linear-gradient(180deg, #dbb880 0%, #cca872 100%) }
+.c1 .f-num  { color: #5c3c12 }
 
-/* ─── Base footer stamp ───────────────────────────────────────────────────── */
+.c2 .f-tab  { background: linear-gradient(180deg, #9cb490 0%, #88a07c 100%) }
+.c2 .f-body { background: linear-gradient(180deg, #aac098 0%, #98ae86 100%) }
+.c2 .f-num  { color: #344828 }
+
+.c3 .f-tab  { background: linear-gradient(180deg, #bc9870 0%, #a88060 100%) }
+.c3 .f-body { background: linear-gradient(180deg, #c8a47e 0%, #b49070 100%) }
+.c3 .f-num  { color: #543618 }
+
+.c4 .f-tab  { background: linear-gradient(180deg, #a89888 0%, #948474 100%) }
+.c4 .f-body { background: linear-gradient(180deg, #b4a494 0%, #a09080 100%) }
+.c4 .f-num  { color: #463830 }
+
+.c5 .f-tab  { background: linear-gradient(180deg, #ccbf74 0%, #b8aa60 100%) }
+.c5 .f-body { background: linear-gradient(180deg, #d8ca80 0%, #c4b66c 100%) }
+.c5 .f-num  { color: #524818 }
+
+/* ─── Base Footer Stamp ───────────────────────────────────────────────────── */
 .base-footer {
   display: flex;
   justify-content: space-between;
@@ -351,77 +451,96 @@ body {
 }
 
 /* ─── Open / Close Button ─────────────────────────────────────────────────── */
-/* DESIGN.md §5 Buttons: gradient primary → primary_container */
 .open-btn {
   display: block;
-  margin: 24px auto 0;
-  background: linear-gradient(135deg,
-    rgba(227, 193, 153, 0.1) 0%,
-    rgba(196, 150, 66,  0.06) 100%);
-  border: 1px solid rgba(227, 193, 153, 0.22);
+  margin: 28px auto 0;
+  background: linear-gradient(160deg, #3e2218 0%, #2a1408 100%);
+  border: 1px solid rgba(227, 193, 153, 0.32);
   color: #e3c199;
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.22em;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  padding: 12px 30px;
-  min-height: 44px;
+  padding: 14px 44px;
+  min-height: 48px;
   border-radius: 4px;
   cursor: pointer;
   touch-action: manipulation;
-  /* Hover: shift to higher surface_container tier — DESIGN.md §5 */
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  transition: background 0.2s, border-color 0.2s, color 0.15s,
+              transform 0.15s cubic-bezier(.4, 0, .2, 1), box-shadow 0.2s;
   position: relative;
   z-index: 10;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
 }
 .open-btn:hover {
-  background: linear-gradient(135deg,
-    rgba(227, 193, 153, 0.18) 0%,
-    rgba(196, 150, 66,  0.12) 100%);
-  border-color: rgba(227, 193, 153, 0.38);
+  background: linear-gradient(160deg, #4e2e20 0%, #381a0e 100%);
+  border-color: rgba(227, 193, 153, 0.55);
   color: #f0e0b4;
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09);
 }
-.open-btn:disabled { opacity: 0.3; cursor: default; }
+.open-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+.open-btn:disabled { opacity: 0.3; cursor: default; transform: none !important; }
 
 /* ─── Modal ───────────────────────────────────────────────────────────────── */
-/* DESIGN.md §3: Glass & Gradient Rule — backdrop-filter: blur for overlays */
 .modal-overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(33, 14, 11, 0.86);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(33, 14, 11, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 100;
   align-items: center;
   justify-content: center;
 }
 .modal-overlay.open { display: flex; }
+
 .modal-box {
   background: #1c0d09;
-  border: 1px solid rgba(227, 193, 153, 0.15);
-  border-radius: 10px;
-  width: 90%; max-width: 420px;
-  padding: 24px 22px 20px;
+  border: 1px solid rgba(227, 193, 153, 0.18);
+  border-radius: 12px;
+  width: 90%; max-width: 440px;
   position: relative;
-  animation: popIn 0.26s cubic-bezier(.4,0,.2,1);
+  animation: popIn 0.28s cubic-bezier(.34, 1.4, .64, 1);
   font-family: 'Work Sans', sans-serif;
   max-height: 82vh; overflow-y: auto;
-  /* Ambient shadow on floating element */
-  box-shadow: 0 0 64px rgba(33, 14, 11, 0.9), 0 8px 24px rgba(33, 14, 11, 0.6);
+  box-shadow:
+    0 0 80px rgba(33, 14, 11, 0.9),
+    0 16px 40px rgba(33, 14, 11, 0.7);
+  --folder-accent: #e3c199;
 }
+/* Colored top accent bar (set via JS custom property) */
+.modal-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--folder-accent, #e3c199);
+  border-radius: 12px 12px 0 0;
+  pointer-events: none;
+}
+
 @keyframes popIn {
-  from { opacity: 0; transform: scale(0.94) translateY(10px) }
+  from { opacity: 0; transform: scale(0.92) translateY(16px) }
   to   { opacity: 1; transform: scale(1)    translateY(0) }
 }
+
 .modal-close-btn {
   position: absolute; top: 8px; right: 8px;
   background: none; border: none;
   color: rgba(227, 193, 153, 0.5);
-  font-size: 16px; cursor: pointer;
+  font-size: 15px; cursor: pointer;
   font-family: monospace;
-  /* 44×44px touch target — SKILL.md §2 touch-target-size */
   min-width: 44px; min-height: 44px;
   display: flex; align-items: center; justify-content: center;
   border-radius: 6px;
@@ -429,51 +548,76 @@ body {
   transition: color 0.15s, background 0.15s;
 }
 .modal-close-btn:hover {
-  background: rgba(227, 193, 153, 0.07);
+  background: rgba(227, 193, 153, 0.08);
   color: #e3c199;
+}
+
+/* Modal header section */
+.modal-header {
+  padding: 24px 22px 0;
 }
 .modal-num {
   font-family: 'Noto Serif', serif;
-  font-size: 22px; font-weight: 700; margin-bottom: 2px;
+  font-size: 20px; font-weight: 700;
+  margin-bottom: 4px;
+  padding-right: 40px; /* clear close button */
 }
 .modal-title-text {
   font-family: 'Noto Serif', serif;
-  font-size: 15px; color: #e3c199;
-  margin-bottom: 3px; padding-right: 24px;
-  line-height: 1.4;
+  font-size: 16px;
+  font-weight: 700;
+  color: #e3c199;
+  padding-right: 40px;
+  line-height: 1.35;
 }
-/* Ghost separator — DESIGN.md §4 "Ghost Border" fallback at 15% */
+
+/* Ghost separator */
 .modal-sep {
   border: none;
   border-top: 1px solid rgba(227, 193, 153, 0.1);
-  margin: 14px 0;
+  margin: 16px 22px;
 }
+
+/* Document list */
+#mContent { padding: 0 22px 22px; }
+
 .empty-msg {
   text-align: center;
-  color: rgba(227, 193, 153, 0.28);
-  font-size: 11px; padding: 24px 0;
+  color: rgba(227, 193, 153, 0.3);
+  font-size: 12px; padding: 28px 0;
   font-style: italic;
 }
 
-/* Doc list — no horizontal dividers; spacing separates items (§5 Folders & Cards) */
+/* Doc item with left accent border */
 .doc-item {
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(227, 193, 153, 0.07);
+  padding: 14px 0 14px 14px;
+  border-left: 2px solid rgba(227, 193, 153, 0.15);
+  margin-bottom: 4px;
+  transition: border-left-color 0.18s;
 }
-.doc-item:last-child { border-bottom: none; }
+.doc-item:last-child { margin-bottom: 0; }
+.doc-item:hover { border-left-color: rgba(227, 193, 153, 0.45); }
+
 .doc-title {
   display: block;
   color: #d4ae78;
   font-family: 'Work Sans', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
   text-decoration: none;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   line-height: 1.45;
   touch-action: manipulation;
   transition: color 0.15s;
 }
-.doc-title:hover { color: #e3c199; text-decoration: underline; }
+.doc-title::after {
+  content: ' ↗';
+  font-size: 10px;
+  opacity: 0.45;
+  font-weight: 400;
+}
+.doc-title:hover { color: #f0e0b4; }
+
 .doc-desc {
   color: rgba(227, 193, 153, 0.55);
   font-family: 'Work Sans', sans-serif;
@@ -496,14 +640,13 @@ body {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 8px;
   font-weight: 400;
-  color: rgba(227, 193, 153, 0.28);
+  color: rgba(227, 193, 153, 0.32);
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
 .page-footer span { line-height: 1.65; }
 
-/* ─── Focus Visible — keyboard nav (SKILL.md §1 focus-states) ────────────── */
-/* Remove default outline; replace with on-brand visible ring */
+/* ─── Focus Visible — keyboard nav (SKILL.md §1) ─────────────────────────── */
 :focus { outline: none; }
 
 .open-btn:focus-visible,
@@ -518,37 +661,89 @@ body {
   border-radius: 4px;
 }
 
-/* ─── Reduced Motion (SKILL.md §7 reduced-motion) ────────────────────────── */
+/* ─── Reduced Motion (SKILL.md §7) ───────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .lid { transition: none; }
-  .folder { transition: opacity 0.01ms, transform 0.01ms; }
-  .folder:hover { transform: none !important; }
+  .folder { transition: opacity 0.01ms, transform 0.01ms; filter: none !important; }
+  .folder:hover { transform: none !important; filter: none !important; }
   .folder:hover .f-tab { transform: none; }
-  .open-btn { transition: none; }
+  .open-btn { transition: none; transform: none !important; }
   @keyframes popIn {
-    from { opacity: 0; transform: none; }
-    to   { opacity: 1; transform: none; }
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
 }
 
-/* ─── Responsive ──────────────────────────────────────────────────────────── */
-@media (max-width: 600px) {
+/* ─── Responsive — Tablet ─────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  body { padding: 24px 12px 40px; }
+  .inst-header { padding: 16px 20px 16px 22px; gap: 14px; }
+  .inst-organ { font-size: 13px; }
+  .wrap { padding: 28px 16px 32px; }
+  .lid { padding: 26px 0 22px; }
+  .lid-title { font-size: 2.6rem; }
+  .lid-acervo { font-size: 10px; padding: 0 20px; margin-top: 10px; }
+  .open-btn { margin-top: 22px; padding: 13px 36px; font-size: 10px; }
+  .modal-box { max-width: 96%; }
+}
+
+/* ─── Responsive — Mobile (scroll-snap for 5 folders) ────────────────────── */
+@media (max-width: 520px) {
   body { padding: 16px 10px 32px; }
-  .inst-header { padding: 12px 16px; gap: 12px; border-radius: 8px 8px 0 0; }
+
+  .inst-header { border-radius: 8px 8px 0 0; padding: 14px 16px 14px 20px; gap: 12px; }
   .inst-organ { font-size: 12px; }
+  .inst-sector { font-size: 8px; }
+
   .wrap { padding: 20px 12px 24px; }
+  .lid { padding: 22px 0 18px; }
   .lid-title { font-size: 2rem; }
   .lid-acervo { font-size: 9px; padding: 0 14px; margin-top: 8px; }
   .lid-sub { font-size: 7px; }
-  .folders-row { gap: 8px; }
-  .folder { max-width: none; }
-  .f-num { font-size: 22px; }
-  .f-name { font-size: 7px; letter-spacing: 0.07em; }
-  .f-body { min-height: 76px; padding: 10px 4px 8px; }
-  .base { padding: 16px 12px 16px; }
-  .modal-box { padding: 18px 16px 16px; max-height: 80vh; }
+
+  /* Horizontal scroll with snap for 5 folders */
+  .folders-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+    padding-bottom: 10px;
+    gap: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(227, 193, 153, 0.2) transparent;
+  }
+  .folders-row::-webkit-scrollbar { height: 3px; }
+  .folders-row::-webkit-scrollbar-track { background: transparent; }
+  .folders-row::-webkit-scrollbar-thumb {
+    background: rgba(227, 193, 153, 0.25);
+    border-radius: 2px;
+  }
+  .folder {
+    flex: 0 0 100px;
+    max-width: 100px;
+    scroll-snap-align: start;
+  }
+  .f-body { min-height: 92px; padding: 12px 6px 12px; }
+  .f-num { font-size: 26px; }
+  .f-name { font-size: 7px; letter-spacing: 0.07em; min-height: 20px; margin-top: 6px; }
+  .f-tab { height: 12px; }
+
+  .base { padding: 16px 12px 16px; min-height: 160px; }
+
+  .modal-header { padding: 20px 18px 0; }
+  .modal-sep { margin: 14px 18px; }
+  #mContent { padding: 0 18px 18px; }
   .modal-num { font-size: 18px; }
-  .modal-title-text { font-size: 13px; }
-  .open-btn { margin-top: 16px; padding: 9px 22px; font-size: 9px; }
-  .page-footer { flex-direction: column; gap: 5px; padding: 10px 16px; font-size: 7px; border-radius: 0 0 8px 8px; }
+  .modal-title-text { font-size: 14px; }
+  .modal-box { border-radius: 10px; max-height: 80vh; }
+
+  .open-btn { margin-top: 16px; padding: 12px 26px; font-size: 10px; }
+  .page-footer {
+    flex-direction: column;
+    gap: 5px; padding: 10px 16px;
+    font-size: 7px;
+    border-radius: 0 0 8px 8px;
+  }
 }
