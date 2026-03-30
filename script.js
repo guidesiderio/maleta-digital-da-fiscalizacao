@@ -1,6 +1,26 @@
 const COLORS = ["c1", "c2", "c3", "c4", "c5"];
 const NUM_HEX = ["#cc9a52", "#6d8e60", "#8078bc", "#cc6a48", "#4a9aac"];
 
+/* ─── Accessibility announcer ────────────────────────────────────────────── */
+function announce(msg) {
+  const el = document.getElementById("a11yAnnouncer");
+  if (el) { el.textContent = ""; requestAnimationFrame(() => { el.textContent = msg; }); }
+}
+
+/* ─── Search bar (created dynamically above folders) ─────────────────────── */
+const searchWrap = document.createElement("div");
+searchWrap.className = "search-wrap";
+searchWrap.innerHTML = `<input type="text" id="searchInput" class="search-input" placeholder="Buscar documento..." aria-label="Buscar documento">`;
+const base = document.getElementById("base");
+base.insertBefore(searchWrap, base.firstChild);
+const searchInput = document.getElementById("searchInput");
+
+/* ─── Normalize for accent-insensitive search ────────────────────────────── */
+function normalize(s) {
+  return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+/* ─── Render folders ─────────────────────────────────────────────────────── */
 const row = document.getElementById("foldersRow");
 folders.forEach((f, i) => {
   const div = document.createElement("div");
@@ -36,17 +56,64 @@ folders.forEach((f, i) => {
   row.appendChild(div);
 });
 
+/* ─── Search / filter logic ──────────────────────────────────────────────── */
+searchInput.addEventListener("input", () => {
+  const q = normalize(searchInput.value.trim());
+  if (!q) {
+    folders.forEach((_, i) => {
+      document.getElementById(`folder-${i}`).classList.remove("folder--dimmed");
+    });
+    return;
+  }
+  let matchCount = 0;
+  let lastMatchIdx = -1;
+  folders.forEach((f, i) => {
+    const el = document.getElementById(`folder-${i}`);
+    const hasMatch = f.docs.some(
+      (doc) => normalize(doc.title).includes(q) || normalize(doc.description).includes(q)
+    );
+    el.classList.toggle("folder--dimmed", !hasMatch);
+    if (hasMatch) { matchCount++; lastMatchIdx = i; }
+  });
+  if (matchCount === 1 && lastMatchIdx >= 0) {
+    openModal(lastMatchIdx, q);
+  }
+});
+
+/* ─── Briefcase open / close ─────────────────────────────────────────────── */
 let isOpen = false;
 const btn = document.getElementById("openBtn");
 const lid = document.getElementById("lid");
 
-btn.addEventListener("click", () => {
-  if (isOpen) {
-    resetCase();
-    return;
-  }
+function openCase(skipAnimation) {
+  if (isOpen) return;
 
   btn.disabled = true;
+
+  if (skipAnimation) {
+    lid.style.transition = "none";
+    lid.classList.add("opened");
+    lid.style.visibility = "hidden";
+    folders.forEach((_, i) => {
+      const el = document.getElementById(`folder-${i}`);
+      el.style.transition = "none";
+      el.classList.add("visible");
+      el.setAttribute("tabindex", "0");
+    });
+    isOpen = true;
+    btn.disabled = false;
+    btn.textContent = "↺ Fechar maleta";
+    searchWrap.classList.add("visible");
+    announce("Maleta aberta");
+    // Restore transitions after a frame
+    requestAnimationFrame(() => {
+      lid.style.transition = "";
+      folders.forEach((_, i) => {
+        document.getElementById(`folder-${i}`).style.transition = "";
+      });
+    });
+    return;
+  }
 
   lid.classList.add("opened");
 
@@ -61,12 +128,21 @@ btn.addEventListener("click", () => {
     isOpen = true;
     btn.disabled = false;
     btn.textContent = "↺ Fechar maleta";
+    searchWrap.classList.add("visible");
+    announce("Maleta aberta");
   }, 820);
 
-  // Oculta o lid após a transição CSS (0.9s) para evitar sobreposição fantasma
   setTimeout(() => {
     lid.style.visibility = "hidden";
   }, 900);
+}
+
+btn.addEventListener("click", () => {
+  if (isOpen) {
+    resetCase();
+    return;
+  }
+  openCase(false);
 });
 
 function resetCase() {
@@ -75,22 +151,39 @@ function resetCase() {
     el.classList.remove("visible");
     el.setAttribute("tabindex", "-1");
   });
-  // Restaura visibilidade antes da animação de fechamento
+  searchWrap.classList.remove("visible");
+  searchInput.value = "";
+  // Remove dimmed state
+  folders.forEach((_, i) => {
+    document.getElementById(`folder-${i}`).classList.remove("folder--dimmed");
+  });
   lid.style.visibility = "visible";
   setTimeout(() => {
     lid.classList.remove("opened");
     btn.textContent = "▶ Abrir maleta";
     isOpen = false;
+    history.replaceState(null, "", window.location.pathname);
+    announce("Maleta fechada");
   }, 200);
   closeModal();
 }
 
-function openModal(i) {
+/* ─── Format date helper ─────────────────────────────────────────────────── */
+function formatDate(dateStr) {
+  if (!dateStr) return "";
+  const [y, m, d] = dateStr.split("-");
+  return `${d}/${m}/${y}`;
+}
+
+/* ─── Modal ──────────────────────────────────────────────────────────────── */
+let currentModalFolder = -1;
+
+function openModal(i, highlightQuery) {
   const f = folders[i];
+  currentModalFolder = i;
   document.getElementById("mNum").textContent = `Pasta ${i + 1}`;
   document.getElementById("mNum").style.color = NUM_HEX[i];
   document.getElementById("mTitle").textContent = f.name;
-  // Accent bar color matches the folder opened — via CSS custom property
   document.querySelector(".modal-box").style.setProperty("--folder-accent", NUM_HEX[i]);
 
   const cont = document.getElementById("mContent");
@@ -98,29 +191,72 @@ function openModal(i) {
     const placeholderText = f.placeholder || "Nenhum documento disponível ainda.";
     cont.innerHTML = `<div class="empty-msg">${placeholderText}</div>`;
   } else {
+    const q = highlightQuery ? normalize(highlightQuery) : "";
     cont.innerHTML = f.docs
       .map(
-        (doc) => `
-      <div class="doc-item">
+        (doc, di) => {
+          const isMatch = q && (normalize(doc.title).includes(q) || normalize(doc.description).includes(q));
+          const matchClass = q && !isMatch ? " doc-item--dimmed" : "";
+          const meta = [];
+          if (doc.date) meta.push(formatDate(doc.date));
+          if (doc.size) meta.push(doc.size);
+          const metaHtml = meta.length
+            ? `<div class="doc-meta">${meta.join(" · ")}</div>`
+            : "";
+          const docHash = `#pasta-${i + 1}/doc-${di + 1}`;
+          return `
+      <div class="doc-item${matchClass}">
         <span class="doc-title">${doc.title}</span>
+        ${metaHtml}
         <p class="doc-desc">${doc.description}</p>
         <div class="doc-actions">
           <a class="doc-btn doc-btn--view" href="${doc.file}" target="_blank" rel="noopener noreferrer">Visualizar</a>
           <a class="doc-btn doc-btn--download" href="${doc.file}" download>Baixar</a>
+          <button class="doc-btn doc-btn--link" data-hash="${docHash}" aria-label="Copiar link do documento" title="Copiar link">🔗 Link</button>
         </div>
       </div>
-    `
+    `;
+        }
       )
       .join("");
+
+    // Attach copy-link handlers
+    cont.querySelectorAll(".doc-btn--link").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const hash = e.currentTarget.dataset.hash;
+        const url = window.location.origin + window.location.pathname + hash;
+        navigator.clipboard.writeText(url).then(() => {
+          e.currentTarget.textContent = "✓ Copiado";
+          setTimeout(() => { e.currentTarget.textContent = "🔗 Link"; }, 1500);
+        }).catch(() => {
+          // Fallback: update hash so user can copy from address bar
+          history.replaceState(null, "", hash);
+        });
+      });
+    });
   }
 
   const overlay = document.getElementById("modalOv");
   overlay.classList.add("open");
-  document.getElementById("mClose").focus();
+
+  // Focus trap setup
+  const closeBtn = document.getElementById("mClose");
+  closeBtn.focus();
+  setupFocusTrap(overlay);
+
+  // Update URL hash
+  history.replaceState(null, "", `#pasta-${i + 1}`);
+  announce(`Pasta ${f.name}: ${f.docs.length} documento${f.docs.length !== 1 ? "s" : ""}`);
 }
 
 function closeModal() {
-  document.getElementById("modalOv").classList.remove("open");
+  const overlay = document.getElementById("modalOv");
+  overlay.classList.remove("open");
+  currentModalFolder = -1;
+  removeFocusTrap();
+  if (isOpen) {
+    history.replaceState(null, "", window.location.pathname);
+  }
 }
 
 document.getElementById("mClose").addEventListener("click", closeModal);
@@ -133,6 +269,79 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeModal();
 });
 
+/* ─── Focus trap for modal (eMAG / WCAG) ─────────────────────────────────── */
+let focusTrapHandler = null;
+
+function setupFocusTrap(container) {
+  removeFocusTrap();
+  focusTrapHandler = (e) => {
+    if (e.key !== "Tab") return;
+    const focusable = container.querySelectorAll(
+      'button, [href], input, [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  };
+  document.addEventListener("keydown", focusTrapHandler);
+}
+
+function removeFocusTrap() {
+  if (focusTrapHandler) {
+    document.removeEventListener("keydown", focusTrapHandler);
+    focusTrapHandler = null;
+  }
+}
+
+/* ─── Deep linking via URL hash ──────────────────────────────────────────── */
+function handleHash() {
+  const hash = window.location.hash;
+  if (!hash) return;
+
+  const pastaMatch = hash.match(/^#pasta-(\d+)/);
+  if (!pastaMatch) return;
+
+  const folderIdx = parseInt(pastaMatch[1], 10) - 1;
+  if (folderIdx < 0 || folderIdx >= folders.length) return;
+
+  if (!isOpen) {
+    openCase(true);
+  }
+
+  // Small delay to ensure DOM is ready
+  requestAnimationFrame(() => {
+    openModal(folderIdx);
+  });
+}
+
+window.addEventListener("hashchange", handleHash);
+
+/* ─── Auto-open on recurring visits (#8) ─────────────────────────────────── */
+(function autoOpen() {
+  const hasHash = window.location.hash && window.location.hash.match(/^#pasta-/);
+  if (hasHash) {
+    // Deep link takes priority
+    handleHash();
+    sessionStorage.setItem("maletaVisited", "1");
+    return;
+  }
+  if (sessionStorage.getItem("maletaVisited")) {
+    openCase(true);
+  }
+})();
+
+// Mark visited after first manual open
+const origOpenCase = openCase;
+btn.addEventListener("click", () => {
+  sessionStorage.setItem("maletaVisited", "1");
+});
+
+/* ─── Footer ─────────────────────────────────────────────────────────────── */
 (function setFooter() {
   const footer = document.getElementById("pageFooter");
   if (!footer) return;

@@ -18,6 +18,39 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { min-height: 100%; }
 
+/* ─── Skip Link (eMAG §1) ────────────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  background: #e3c199;
+  color: #210e0b;
+  padding: 8px 16px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 6px 6px;
+  z-index: 200;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid #e3c199;
+  outline-offset: 2px;
+}
+
+/* ─── Screen reader only ─────────────────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ─── Page Layout ─────────────────────────────────────────────────────────── */
 body {
   min-height: 100vh;
@@ -299,6 +332,43 @@ body {
   box-shadow: inset 0 6px 20px rgba(0, 0, 0, 0.3); /* depth inside briefcase */
 }
 
+/* ─── Search Bar ─────────────────────────────────────────────────────────── */
+.search-wrap {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 18px;
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+}
+.search-wrap.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.search-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(227, 193, 153, 0.15);
+  color: #e3c199;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  padding: 8px 4px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-input::placeholder {
+  color: rgba(227, 193, 153, 0.3);
+  font-style: normal;
+}
+.search-input:focus {
+  border-bottom-color: rgba(227, 193, 153, 0.45);
+}
+
 /* ─── Folders ─────────────────────────────────────────────────────────────── */
 .folders-row {
   display: flex;
@@ -404,6 +474,9 @@ body {
   color: rgba(227, 193, 153, 0.72);
   margin-top: 10px;
 }
+
+/* ─── Dimmed Folder (search no-match) ────────────────────────────────────── */
+.folder--dimmed.visible { opacity: 0.2; pointer-events: none; }
 
 /* ─── Empty Folder State ──────────────────────────────────────────────────── */
 .folder--empty.visible { opacity: 0.55; }
@@ -682,6 +755,43 @@ body {
   line-height: 1.6;
 }
 
+/* ─── Document Metadata (stamped style) ──────────────────────────────────── */
+.doc-meta {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  color: rgba(227, 193, 153, 0.38);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  transform: rotate(-0.5deg);
+  transform-origin: left center;
+}
+
+/* ─── Copy Link Button (ghost style) ─────────────────────────────────────── */
+.doc-btn--link {
+  background: transparent;
+  border: 1px solid rgba(227, 193, 153, 0.1);
+  color: rgba(227, 193, 153, 0.45);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 7px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: border-color 0.18s, color 0.15s;
+  min-height: 32px;
+}
+.doc-btn--link:hover {
+  border-color: rgba(227, 193, 153, 0.35);
+  color: rgba(227, 193, 153, 0.75);
+}
+
+/* ─── Dimmed Doc Item (search no-match) ──────────────────────────────────── */
+.doc-item--dimmed { opacity: 0.25; }
+
 /* ─── Page Footer ─────────────────────────────────────────────────────────── */
 .page-footer {
   width: 100%;
@@ -805,4 +915,110 @@ body {
     font-size: 7px;
     border-radius: 0 0 8px 8px;
   }
+}
+
+/* ─── Print View (#9) — clean index for administrative processes ─────────── */
+@media print {
+  * { box-shadow: none !important; text-shadow: none !important; }
+
+  body {
+    background: #fff !important;
+    color: #210e0b !important;
+    padding: 20px !important;
+    display: block !important;
+  }
+
+  /* Hide UI chrome */
+  .skip-link, .sr-only, .handle-outer, .lid, .lid-latch,
+  .lid-hinges, .open-btn, .modal-overlay, .search-wrap,
+  .f-paper, .f-paper2, .f-tab { display: none !important; }
+
+  .inst-header {
+    background: none !important;
+    border: none !important;
+    padding: 0 0 12px !important;
+    border-bottom: 2px solid #210e0b !important;
+    border-radius: 0 !important;
+    max-width: 100% !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .inst-header::before { display: none !important; }
+  .inst-organ { color: #210e0b !important; font-size: 16px !important; }
+  .inst-sector { color: #555 !important; font-size: 10px !important; }
+
+  .wrap {
+    background: none !important;
+    border: none !important;
+    padding: 16px 0 !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+  }
+
+  .scene { perspective: none !important; max-width: 100% !important; }
+  .case-wrap { overflow: visible !important; }
+
+  .base {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    min-height: auto !important;
+  }
+
+  .folders-row {
+    flex-wrap: wrap !important;
+    gap: 20px !important;
+    justify-content: flex-start !important;
+  }
+
+  .folder {
+    opacity: 1 !important;
+    transform: none !important;
+    flex: 0 0 auto !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 12px;
+    margin-bottom: 4px;
+  }
+  .folder--empty.visible { opacity: 0.6 !important; }
+
+  .f-body {
+    background: none !important;
+    padding: 4px 0 !important;
+    min-height: auto !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+    justify-content: flex-start !important;
+  }
+  .f-num {
+    font-size: 16px !important;
+    color: #210e0b !important;
+  }
+  .f-count {
+    background: none !important;
+    color: #666 !important;
+    font-size: 10px !important;
+    padding: 0 !important;
+  }
+  .f-name {
+    color: #210e0b !important;
+    font-size: 12px !important;
+    margin-top: 2px !important;
+    text-align: left !important;
+  }
+
+  .base-footer { display: none !important; }
+
+  .page-footer {
+    background: none !important;
+    border-top: 1px solid #ccc !important;
+    border-radius: 0 !important;
+    color: #666 !important;
+    max-width: 100% !important;
+    padding: 8px 0 !important;
+  }
+  .footer-link { color: #333 !important; }
 }

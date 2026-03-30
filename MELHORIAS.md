@@ -44,7 +44,7 @@ O site é um portal estático institucional da UFPI para fiscais e gestores de c
 
 ---
 
-### 4. Deep linking via URL hash
+### 4. ~~Deep linking via URL hash~~ (IMPLEMENTADO)
 
 **Por quê**: Fiscais frequentemente precisam compartilhar documentos específicos por e-mail ou WhatsApp ("veja a Resolução CAD 186/2025"). Hoje, todo link leva à maleta fechada — o destinatário precisa abrir e navegar manualmente.
 
@@ -61,7 +61,7 @@ O site é um portal estático institucional da UFPI para fiscais e gestores de c
 
 ## TIER 2 — Impacto Médio, Esforço Médio
 
-### 5. Metadados dos documentos
+### 5. ~~Metadados dos documentos~~ (IMPLEMENTADO)
 
 **Por quê**: Fiscais precisam saber se o documento que têm é a versão atual. Sem data de publicação ou tamanho do arquivo, não há como saber se é necessário baixar novamente.
 
@@ -74,7 +74,7 @@ O site é um portal estático institucional da UFPI para fiscais e gestores de c
 
 ---
 
-### 6. Busca / filtro rápido
+### 6. ~~Busca / filtro rápido~~ (IMPLEMENTADO)
 
 **Por quê**: Com o crescimento do acervo (pastas vazias serão populadas, legislação acumula mais atos normativos), localizar "IN 05/2017" entre 15+ documentos exige abrir cada pasta. Quem sabe o que procura não deveria precisar lembrar em qual pasta está.
 
@@ -88,7 +88,7 @@ O site é um portal estático institucional da UFPI para fiscais e gestores de c
 
 ---
 
-### 7. Acessibilidade (eMAG compliance)
+### 7. ~~Acessibilidade (eMAG compliance)~~ (IMPLEMENTADO)
 
 **Por quê**: Sites governamentais brasileiros devem seguir o eMAG (Modelo de Acessibilidade em Governo Eletrônico), baseado na WCAG 2.0 AA. Faltam: skip link, focus trap no modal, anúncios via `aria-live`.
 
@@ -104,15 +104,15 @@ O site é um portal estático institucional da UFPI para fiscais e gestores de c
 
 ## TIER 3 — Melhorias Futuras
 
-### 8. Auto-abrir em visitas recorrentes
+### 8. ~~Auto-abrir em visitas recorrentes~~ (IMPLEMENTADO)
 
 Salvar estado em `sessionStorage` para pular a animação de abertura em visitas subsequentes na mesma sessão. Baixo esforço (~10 linhas em `script.js`).
 
-### 9. Visualização para impressão
+### 9. ~~Visualização para impressão~~ (IMPLEMENTADO)
 
 `@media print` que esconde a UI da maleta e renderiza um índice limpo de todas as pastas e documentos — útil para anexar a processos administrativos físicos. Médio esforço (~60 linhas em `style.css`).
 
-### 10. Service Worker para acesso offline
+### 10. ~~Service Worker para acesso offline~~ (IMPLEMENTADO)
 
 Cache dos PDFs para uso em locais com conectividade ruim (inspeções de campo). Alto esforço (novo arquivo `sw.js`, estratégia de invalidação de cache). Recomendado apenas após o acervo estar mais completo.
 
@@ -123,13 +123,13 @@ Cache dos PDFs para uso em locais com conectividade ruim (inspeções de campo).
 1. ~~**#1** Remover Google Docs Viewer~~ (FEITO)
 2. ~~**#2** Pastas vazias com placeholder~~ (FEITO)
 3. ~~**#3** Footer: data real + link LAI~~ (FEITO)
-4. **#4** Deep linking via hash
-5. **#5** Metadados dos documentos
-6. **#8** Auto-abrir em revisitas
-7. **#7** Acessibilidade eMAG
-8. **#6** Busca/filtro
-9. **#9** Print view
-10. **#10** Service Worker
+4. ~~**#4** Deep linking via hash~~ (FEITO)
+5. ~~**#5** Metadados dos documentos~~ (FEITO)
+6. ~~**#8** Auto-abrir em revisitas~~ (FEITO)
+7. ~~**#7** Acessibilidade eMAG~~ (FEITO)
+8. ~~**#6** Busca/filtro~~ (FEITO)
+9. ~~**#9** Print view~~ (FEITO)
+10. ~~**#10** Service Worker~~ (FEITO)
 
 ---
 

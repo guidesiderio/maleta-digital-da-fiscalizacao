@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <a href="#base" class="skip-link">Ir para o conteúdo</a>
+    <div aria-live="polite" id="a11yAnnouncer" class="sr-only"></div>
     <header class="inst-header">
       <img
         id="logo-institucional"
@@ -20,7 +22,7 @@
       </div>
     </header>
 
-    <div class="wrap">
+    <div class="wrap" role="main">
       <div class="scene">
         <div class="case-wrap">
           <div class="handle-outer"><div class="handle"></div></div>
@@ -61,5 +63,10 @@
 
     <script src="data.js"></script>
     <script src="script.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      }
+    </script>
   </body>
 </html>
