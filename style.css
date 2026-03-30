@@ -595,19 +595,70 @@ body {
   font-family: 'Work Sans', sans-serif;
   font-size: 13px;
   font-weight: 600;
-  text-decoration: none;
   margin-bottom: 6px;
   line-height: 1.45;
-  touch-action: manipulation;
-  transition: color 0.15s;
 }
-.doc-title::after {
-  content: ' ↗';
+
+/* Action buttons row */
+.doc-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+.doc-btn {
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 10px;
-  opacity: 0.45;
-  font-weight: 400;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 7px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background 0.18s, border-color 0.18s, color 0.15s,
+              transform 0.15s cubic-bezier(.4, 0, .2, 1), box-shadow 0.18s;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
-.doc-title:hover { color: #f0e0b4; }
+.doc-btn:hover { transform: translateY(-1px); }
+.doc-btn:active { transform: translateY(0); }
+
+/* Visualizar — primary gradient button */
+.doc-btn--view {
+  background: linear-gradient(160deg, #3e2218 0%, #2a1408 100%);
+  border: 1px solid rgba(227, 193, 153, 0.32);
+  color: #e3c199;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+.doc-btn--view::before { content: '↗ '; font-size: 9px; }
+.doc-btn--view:hover {
+  background: linear-gradient(160deg, #4e2e20 0%, #381a0e 100%);
+  border-color: rgba(227, 193, 153, 0.55);
+  color: #f0e0b4;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+}
+
+/* Baixar — ghost/outline button */
+.doc-btn--download {
+  background: transparent;
+  border: 1px solid rgba(227, 193, 153, 0.15);
+  color: rgba(227, 193, 153, 0.6);
+}
+.doc-btn--download::before { content: '⤓ '; font-size: 11px; }
+.doc-btn--download:hover {
+  border-color: rgba(227, 193, 153, 0.4);
+  color: #e3c199;
+  background: rgba(227, 193, 153, 0.05);
+}
+
+/* Focus visible for buttons */
+.doc-btn:focus-visible {
+  outline: 2px solid rgba(227, 193, 153, 0.65);
+  outline-offset: 2px;
+}
 
 .doc-desc {
   color: rgba(227, 193, 153, 0.55);
@@ -641,8 +692,7 @@ body {
 :focus { outline: none; }
 
 .open-btn:focus-visible,
-.modal-close-btn:focus-visible,
-.doc-title:focus-visible {
+.modal-close-btn:focus-visible {
   outline: 2px solid rgba(227, 193, 153, 0.65);
   outline-offset: 3px;
 }

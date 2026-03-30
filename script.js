@@ -106,8 +106,12 @@ function openModal(i) {
       .map(
         (doc) => `
       <div class="doc-item">
-        <a class="doc-title" href="${getViewerUrl(doc.file)}" target="_blank" rel="noopener noreferrer">${doc.title}</a>
+        <span class="doc-title">${doc.title}</span>
         <p class="doc-desc">${doc.description}</p>
+        <div class="doc-actions">
+          <a class="doc-btn doc-btn--view" href="${getViewerUrl(doc.file)}" target="_blank" rel="noopener noreferrer">Visualizar</a>
+          <a class="doc-btn doc-btn--download" href="${doc.file}" download>Baixar</a>
+        </div>
       </div>
     `
       )
