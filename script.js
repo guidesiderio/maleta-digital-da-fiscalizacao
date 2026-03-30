@@ -95,6 +95,8 @@ function openModal(i) {
   document.getElementById("mNum").textContent = `Pasta ${i + 1}`;
   document.getElementById("mNum").style.color = NUM_HEX[i];
   document.getElementById("mTitle").textContent = f.name;
+  // Accent bar color matches the folder opened — via CSS custom property
+  document.querySelector(".modal-box").style.setProperty("--folder-accent", NUM_HEX[i]);
 
   const cont = document.getElementById("mContent");
   if (f.docs.length === 0) {

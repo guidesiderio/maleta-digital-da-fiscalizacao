@@ -184,14 +184,16 @@ body {
 }
 
 /* ─── Lid Typography ──────────────────────────────────────────────────────── */
+/* Título longo — usa clamp para escalar entre mobile e desktop sem overflow */
 .lid-title {
   font-family: 'Noto Serif', serif;
-  font-size: 3.5rem;
+  font-size: clamp(1.45rem, 5.5vw, 2.6rem);
   font-weight: 700;
   color: #e3c199;
-  letter-spacing: 0.1em;
-  line-height: 1;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+  padding: 0 20px;
 }
 .lid-acervo {
   font-family: 'Work Sans', sans-serif;
@@ -202,17 +204,6 @@ body {
   margin-top: 14px;
   padding: 0 32px;
   line-height: 1.7;
-}
-.lid-sub {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 8px;
-  font-weight: 500;
-  color: rgba(227, 193, 153, 0.3);
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  margin-top: 12px;
-  display: inline-block;
-  transform: rotate(-0.4deg); /* hand-stamped feel — DESIGN.md §5 */
 }
 
 /* ─── Latch ───────────────────────────────────────────────────────────────── */
@@ -681,7 +672,6 @@ body {
   .inst-organ { font-size: 13px; }
   .wrap { padding: 28px 16px 32px; }
   .lid { padding: 26px 0 22px; }
-  .lid-title { font-size: 2.6rem; }
   .lid-acervo { font-size: 10px; padding: 0 20px; margin-top: 10px; }
   .open-btn { margin-top: 22px; padding: 13px 36px; font-size: 10px; }
   .modal-box { max-width: 96%; }
@@ -697,9 +687,7 @@ body {
 
   .wrap { padding: 20px 12px 24px; }
   .lid { padding: 22px 0 18px; }
-  .lid-title { font-size: 2rem; }
   .lid-acervo { font-size: 9px; padding: 0 14px; margin-top: 8px; }
-  .lid-sub { font-size: 7px; }
 
   /* Horizontal scroll with snap for 5 folders */
   .folders-row {
