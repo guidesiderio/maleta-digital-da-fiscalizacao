@@ -1,29 +1,24 @@
 const COLORS = ["c1", "c2", "c3", "c4", "c5"];
 const NUM_HEX = ["#cc9a52", "#6d8e60", "#8078bc", "#cc6a48", "#4a9aac"];
 
-function getViewerUrl(file) {
-  const base = window.location.href.replace(/\/[^/]*$/, "/");
-  const fileUrl = base + file;
-  return "https://docs.google.com/viewer?url=" + encodeURIComponent(fileUrl);
-}
-
 const row = document.getElementById("foldersRow");
 folders.forEach((f, i) => {
   const div = document.createElement("div");
-  div.className = `folder ${COLORS[i]}`;
+  const isEmpty = f.docs.length === 0;
+  div.className = `folder ${COLORS[i]}${isEmpty ? " folder--empty" : ""}`;
   div.id = `folder-${i}`;
   div.setAttribute("role", "button");
   div.setAttribute("tabindex", "-1");
   div.setAttribute("aria-label", `Abrir pasta: ${f.name}`);
   const docCount = f.docs.length;
-  const countLabel = `${docCount} doc${docCount !== 1 ? "s" : ""}`;
+  const countLabel = isEmpty ? "em breve" : `${docCount} doc${docCount !== 1 ? "s" : ""}`;
   div.innerHTML = `
     <div class="f-paper2"></div>
     <div class="f-paper"></div>
     <div class="f-tab"></div>
     <div class="f-body">
       <div class="f-num">${i + 1}</div>
-      <div class="f-count">${countLabel}</div>
+      <div class="f-count">${isEmpty ? '<span class="f-badge-soon">em breve</span>' : countLabel}</div>
     </div>
     <div class="f-name">${f.name}</div>
   `;
@@ -100,7 +95,8 @@ function openModal(i) {
 
   const cont = document.getElementById("mContent");
   if (f.docs.length === 0) {
-    cont.innerHTML = '<div class="empty-msg">Nenhum documento disponível ainda.</div>';
+    const placeholderText = f.placeholder || "Nenhum documento disponível ainda.";
+    cont.innerHTML = `<div class="empty-msg">${placeholderText}</div>`;
   } else {
     cont.innerHTML = f.docs
       .map(
@@ -109,7 +105,7 @@ function openModal(i) {
         <span class="doc-title">${doc.title}</span>
         <p class="doc-desc">${doc.description}</p>
         <div class="doc-actions">
-          <a class="doc-btn doc-btn--view" href="${getViewerUrl(doc.file)}" target="_blank" rel="noopener noreferrer">Visualizar</a>
+          <a class="doc-btn doc-btn--view" href="${doc.file}" target="_blank" rel="noopener noreferrer">Visualizar</a>
           <a class="doc-btn doc-btn--download" href="${doc.file}" download>Baixar</a>
         </div>
       </div>
@@ -140,14 +136,10 @@ document.addEventListener("keydown", (e) => {
 (function setFooter() {
   const footer = document.getElementById("pageFooter");
   if (!footer) return;
-  const now = new Date();
-  const dateStr = now.toLocaleDateString("pt-BR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric"
-  });
+  const [y, m, d] = LAST_UPDATED.split("-");
+  const dateStr = `${d}/${m}/${y}`;
   footer.innerHTML = `
     <span>Última atualização: ${dateStr}</span>
-    <span>Acesso regulado pela Lei nº 12.527/2011 – Lei de Acesso à Informação</span>
+    <span>Acesso regulado pela <a class="footer-link" href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12527.htm" target="_blank" rel="noopener noreferrer">Lei nº 12.527/2011 – Lei de Acesso à Informação</a></span>
   `;
 })();

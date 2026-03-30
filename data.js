@@ -1,3 +1,5 @@
+const LAST_UPDATED = '2026-03-30';
+
 const folders = [
   {
     name: 'Manual',
@@ -42,9 +44,11 @@ const folders = [
   {
     name: 'Procedimentos',
     docs: [],
+    placeholder: 'Em elaboração pela equipe do Departamento de Fiscalização de Contratos.',
   },
   {
     name: 'Modelos de Documento',
     docs: [],
+    placeholder: 'Modelos de relatórios e documentos de fiscalização em fase de padronização.',
   },
 ];

@@ -405,6 +405,21 @@ body {
   margin-top: 10px;
 }
 
+/* ─── Empty Folder State ──────────────────────────────────────────────────── */
+.folder--empty.visible { opacity: 0.55; }
+.folder--empty:hover { opacity: 0.75; }
+
+.f-badge-soon {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 7px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(0, 0, 0, 0.45);
+  transform: rotate(-2deg);
+  display: inline-block;
+}
+
 /* ─── Folder Colors — five muted tones with subtle gradients ─────────────────
    Tan / Muted Green / Light Brown / Grey-Brown / Pale Yellow
 ──────────────────────────────────────────────────────────────────────────── */
@@ -687,6 +702,12 @@ body {
   text-transform: uppercase;
 }
 .page-footer span { line-height: 1.65; }
+.footer-link {
+  color: rgba(227, 193, 153, 0.48);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.footer-link:hover { color: rgba(227, 193, 153, 0.72); }
 
 /* ─── Focus Visible — keyboard nav (SKILL.md §1) ─────────────────────────── */
 :focus { outline: none; }
