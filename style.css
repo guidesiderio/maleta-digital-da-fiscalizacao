@@ -382,12 +382,13 @@ body {
   cursor: pointer;
   position: relative;
   opacity: 0;
+  pointer-events: none;
   transform: translateY(28px);
   transition: opacity 0.38s, transform 0.38s cubic-bezier(.4, 0, .2, 1),
               filter 0.22s;
   touch-action: manipulation;
 }
-.folder.visible { opacity: 1; transform: translateY(0); }
+.folder.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
 .folder:hover {
   transform: translateY(-10px) !important;
   filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.55));
