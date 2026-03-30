@@ -1,71 +1,96 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Courier+Prime:wght@400;700&display=swap');
-*{box-sizing:border-box;margin:0;padding:0}
+/* ─── Fonts ─────────────────────────────────────────────────────────────────
+   Noto Serif  → Display / Headlines  (DESIGN.md §3)
+   Work Sans   → Body / Titles        (DESIGN.md §3)
+   Space Grotesk → Labels / Metadata  (DESIGN.md §3)
+──────────────────────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500&display=swap');
 
-html {
-  min-height: 100%;
-}
+/* ─── Design Tokens (DESIGN.md §2) ──────────────────────────────────────────
+   surface/background  : #210e0b   Dark Wood base
+   surface-container-low: #2b1613
+   surface-container    : #3a1f1a
+   surface-container-high: #472f2b
+   primary             : #e3c199   Beige/Tan
+   secondary           : #c5caa8   Muted Green
+   tertiary            : #e1c296   Pale Yellow
+   ghost-border        : rgba(227,193,153,0.15)  (outline_variant @ 15%)
+──────────────────────────────────────────────────────────────────────────── */
 
-.inst-header {
-  width: 100%;
-  max-width: 800px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px 24px;
-  background: #1e1408;
-  border: 1px solid #3a2810;
-  border-radius: 10px 10px 0 0;
-  margin-bottom: 0;
-}
-.inst-logo {
-  height: 48px;
-  width: auto;
-  flex-shrink: 0;
-  opacity: 0.85;
-  border-radius: 4px;
-}
-.inst-info { display: flex; flex-direction: column; gap: 3px; }
-.inst-organ {
-  font-family: 'Playfair Display', serif;
-  font-size: 13px;
-  color: #e8d098;
-  letter-spacing: 0.04em;
-}
-.inst-sector {
-  font-family: 'Courier Prime', monospace;
-  font-size: 9px;
-  color: #7a5a28;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
+html { min-height: 100%; }
+
+/* ─── Page Layout ─────────────────────────────────────────────────────────── */
 body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #1a1008;
-  padding: 0 16px 40px;
+  background: #210e0b;
+  padding: 32px 16px 48px;
+  font-family: 'Work Sans', sans-serif;
 }
 
+/* ─── Institutional Header ────────────────────────────────────────────────── */
+.inst-header {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 28px;
+  background: #1c0d09;
+  /* Ghost border per No-Line rule — tonal shift as primary boundary */
+  border-bottom: 1px solid rgba(227, 193, 153, 0.1);
+  border-radius: 12px 12px 0 0;
+}
+.inst-logo {
+  height: 48px;
+  width: auto;
+  flex-shrink: 0;
+  opacity: 0.8;
+  border-radius: 4px;
+}
+.inst-info { display: flex; flex-direction: column; gap: 5px; }
+.inst-organ {
+  font-family: 'Noto Serif', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #e3c199;
+  letter-spacing: 0.04em;
+}
+.inst-sector {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  color: rgba(227, 193, 153, 0.62);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* ─── Wrap — wooden surface behind briefcase ──────────────────────────────── */
 .wrap {
-  background: #2a1e10;
+  background: #2b1613;
   background-image:
-    repeating-linear-gradient(90deg, rgba(0,0,0,0.07) 0px, rgba(0,0,0,0.07) 1px, transparent 1px, transparent 28px),
-    repeating-linear-gradient(0deg, rgba(0,0,0,0.07) 0px, rgba(0,0,0,0.07) 1px, transparent 1px, transparent 28px);
-  border-radius: 0 0 14px 14px;
-  border: 1px solid #3a2810;
-  border-top: none;
-  padding: 28px 20px 32px;
-  font-family: 'Courier Prime', monospace;
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.055) 0px, rgba(0,0,0,0.055) 1px, transparent 1px, transparent 32px),
+    repeating-linear-gradient(0deg,  rgba(0,0,0,0.055) 0px, rgba(0,0,0,0.055) 1px, transparent 1px, transparent 32px);
+  border-radius: 0;
+  /* Ghost borders — lateral grain lines only, no top/bottom (header/footer handle those) */
+  border-left:  1px solid rgba(227, 193, 153, 0.07);
+  border-right: 1px solid rgba(227, 193, 153, 0.07);
+  padding: 32px 24px 36px;
   width: 100%;
   max-width: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 0;
+  /* Ambient depth — DESIGN.md §4: ultra-diffused, tinted umber */
+  box-shadow:
+    0 32px 80px rgba(33, 14, 11, 0.72),
+    0  4px 16px rgba(33, 14, 11, 0.45);
 }
 
+/* ─── Scene / Briefcase ───────────────────────────────────────────────────── */
 .scene {
   width: 100%;
   max-width: 740px;
@@ -80,6 +105,7 @@ body {
   transform-style: preserve-3d;
 }
 
+/* Handle */
 .handle-outer {
   display: flex;
   justify-content: center;
@@ -90,20 +116,27 @@ body {
 .handle {
   width: 110px;
   height: 24px;
-  border: 2.5px solid #6b4a1e;
+  /* Ghost border instead of opaque stroke */
+  border: 2px solid rgba(227, 193, 153, 0.18);
   border-bottom: none;
   border-radius: 14px 14px 0 0;
-  background: #3d2a0f;
+  background: #472f2b; /* surface-container-high */
 }
 
+/* Lid */
 .lid {
   width: 100%;
-  background: #3d2a0f;
-  background-image: repeating-linear-gradient(180deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 6px);
-  border: 2px solid #6b4a1e;
+  background: #3a1f1a; /* surface-container */
+  background-image: repeating-linear-gradient(180deg,
+    rgba(255,255,255,0.018) 0px,
+    rgba(255,255,255,0.018) 1px,
+    transparent 1px,
+    transparent 6px);
+  /* Ghost border — DESIGN.md §4 "Ghost Border" fallback */
+  border: 1px solid rgba(227, 193, 153, 0.13);
   border-bottom: none;
   border-radius: 10px 10px 0 0;
-  padding: 22px 0 18px;
+  padding: 28px 0 22px;
   text-align: center;
   transform-origin: bottom center;
   transform: rotateX(0deg);
@@ -113,34 +146,43 @@ body {
   backface-visibility: hidden;
   transform-style: preserve-3d;
 }
+.lid.opened { transform: rotateX(-118deg); }
 
-.lid.opened {
-  transform: rotateX(-118deg);
-}
-
+/* ─── Lid Typography ──────────────────────────────────────────────────────── */
+/* DESIGN.md §3: Display title → Noto Serif, display-lg (3.5rem) */
 .lid-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 26px;
-  color: #e8d098;
-  letter-spacing: 0.1em;
+  font-family: 'Noto Serif', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #e3c199;
+  letter-spacing: 0.08em;
+  line-height: 1;
 }
+/* Subtitle — Work Sans body, muted primary */
 .lid-acervo {
-  font-family: 'Courier Prime', monospace;
-  font-size: 9px;
-  color: #9a7a3a;
-  letter-spacing: 0.1em;
-  margin-top: 7px;
-  padding: 0 16px;
-  line-height: 1.5;
-}
-.lid-sub {
+  font-family: 'Work Sans', sans-serif;
   font-size: 10px;
-  color: #7a5a28;
-  letter-spacing: 0.22em;
+  font-weight: 400;
+  color: rgba(227, 193, 153, 0.55);
+  letter-spacing: 0.06em;
+  margin-top: 12px;
+  padding: 0 24px;
+  line-height: 1.65;
+}
+/* Stamp metadata — Space Grotesk, uppercase, slight rotation = "hand-stamped" */
+.lid-sub {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 8px;
+  font-weight: 500;
+  color: rgba(227, 193, 153, 0.28);
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  margin-top: 6px;
+  margin-top: 10px;
+  display: inline-block;
+  transform: rotate(-0.4deg); /* DESIGN.md §5 stamped metadata */
 }
 
+/* Latch & hinges — gradient per §5 Glass & Gradient Rule */
 .lid-latch {
   position: absolute;
   bottom: -1px;
@@ -148,19 +190,20 @@ body {
   transform: translateX(-50%);
   width: 40px;
   height: 16px;
-  background: #c49642;
+  background: linear-gradient(180deg, #e3c199 0%, #c49642 100%);
   border-radius: 4px 4px 0 0;
-  border: 1px solid #8a6a20;
+  border: 1px solid rgba(227, 193, 153, 0.25);
   border-bottom: none;
-  transition: background 0.3s;
+  transition: filter 0.3s;
 }
+.lid-latch:hover { filter: brightness(1.12); }
 .lid-latch::after {
-  content:'';
-  display:block;
-  width:14px;height:7px;
-  background:#8a6a20;
-  border-radius:2px;
-  margin:5px auto 0;
+  content: '';
+  display: block;
+  width: 14px; height: 7px;
+  background: rgba(33, 14, 11, 0.35);
+  border-radius: 2px;
+  margin: 5px auto 0;
 }
 
 .lid-hinges {
@@ -174,47 +217,51 @@ body {
 }
 .hinge {
   width: 20px; height: 10px;
-  background: #c49642;
+  background: linear-gradient(180deg, #e3c199 0%, #c49642 100%);
   border-radius: 0 0 4px 4px;
-  border: 1px solid #8a6a20;
+  border: 1px solid rgba(227, 193, 153, 0.25);
   border-top: none;
 }
 
+/* Base / briefcase interior */
 .base {
   width: 100%;
-  background: #3d2a0f;
-  background-image: repeating-linear-gradient(180deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 6px);
-  border: 2px solid #6b4a1e;
+  background: #2b1613; /* surface-container-low */
+  background-image: repeating-linear-gradient(180deg,
+    rgba(255,255,255,0.018) 0px,
+    rgba(255,255,255,0.018) 1px,
+    transparent 1px,
+    transparent 6px);
+  border: 1px solid rgba(227, 193, 153, 0.13);
   border-top: none;
   border-radius: 0 0 14px 14px;
-  padding: 24px 22px 22px;
+  padding: 28px 24px 24px;
   position: relative;
   z-index: 4;
   min-height: 230px;
 }
 
+/* ─── Folders ─────────────────────────────────────────────────────────────── */
 .folders-row {
   display: flex;
-  gap: 13px;
+  gap: 14px;
   justify-content: center;
 }
 
 .folder {
   flex: 1;
-  max-width: 120px;
+  max-width: 128px;
   cursor: pointer;
   position: relative;
   opacity: 0;
   transform: translateY(28px);
   transition: opacity 0.38s, transform 0.38s cubic-bezier(.4,0,.2,1);
+  touch-action: manipulation;
 }
-.folder.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.folder.visible { opacity: 1; transform: translateY(0); }
 .folder:hover { transform: translateY(-7px) !important; }
 .folder:hover .f-tab { transform: translateY(-3px) rotate(-2deg); }
-.folder:hover .f-paper { height: 20px; opacity: 1; }
+.folder:hover .f-paper  { height: 20px; opacity: 1; }
 .folder:hover .f-paper2 { height: 26px; opacity: 0.65; }
 
 .f-tab {
@@ -244,157 +291,264 @@ body {
 }
 .f-body {
   border-radius: 2px 6px 6px 6px;
-  padding: 14px 8px 12px;
+  padding: 16px 8px 14px;
   display: flex; flex-direction: column;
-  align-items: center; gap: 6px;
-  min-height: 100px; justify-content: center;
+  align-items: center; gap: 4px;
+  min-height: 104px; justify-content: center;
   position: relative; z-index: 2;
   transition: filter 0.18s;
 }
-.folder:hover .f-body { filter: brightness(1.12); }
+.folder:hover .f-body { filter: brightness(1.1); }
+
+/* Folder number — Noto Serif display */
 .f-num {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Noto Serif', serif;
   font-size: 30px; font-weight: 700; line-height: 1;
 }
+/* Folder label — Space Grotesk "stamped" per §5 */
 .f-name {
-  font-size: 9px; text-transform: uppercase;
-  letter-spacing: 0.06em; text-align: center;
-  line-height: 1.5; min-height: 26px;
-  color: #c8a86a; margin-top: 8px;
-  font-family: 'Courier Prime', monospace;
-}
-.f-count {
-  font-family: 'Courier Prime', monospace;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 8px;
-  color: rgba(0,0,0,0.45);
-  letter-spacing: 0.05em;
-  margin-top: 4px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+  line-height: 1.5;
+  min-height: 24px;
+  color: rgba(227, 193, 153, 0.65);
+  margin-top: 8px;
+}
+/* Doc counter */
+.f-count {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.52);
+  letter-spacing: 0.06em;
+  margin-top: 2px;
 }
 
-.c1 .f-tab{background:#b8894a}.c1 .f-body{background:#cc9a52}.c1 .f-num{color:#6b4812}
-.c2 .f-tab{background:#5e7a52}.c2 .f-body{background:#6d8e60}.c2 .f-num{color:#2e4a24}
-.c3 .f-tab{background:#7068a8}.c3 .f-body{background:#8078bc}.c3 .f-num{color:#382c6a}
-.c4 .f-tab{background:#b85a3a}.c4 .f-body{background:#cc6a48}.c4 .f-num{color:#6a2010}
-.c5 .f-tab{background:#3a8898}.c5 .f-body{background:#4a9aac}.c5 .f-num{color:#1a4e5a}
+/* ─── Folder Colors — five muted tones per DESIGN.md §5 ──────────────────────
+   Tan (#e3c199), Muted Green (#c5caa8), Light Brown, Grey-Brown, Pale Yellow
+──────────────────────────────────────────────────────────────────────────── */
+.c1 .f-tab { background: #c8a46c } .c1 .f-body { background: #d4b07a } .c1 .f-num { color: #5c3c12 }
+.c2 .f-tab { background: #96aa84 } .c2 .f-body { background: #a4b892 } .c2 .f-num { color: #344828 }
+.c3 .f-tab { background: #b49068 } .c3 .f-body { background: #c09c76 } .c3 .f-num { color: #543618 }
+.c4 .f-tab { background: #a09282 } .c4 .f-body { background: #ac9e8e } .c4 .f-num { color: #463830 }
+.c5 .f-tab { background: #c4b86e } .c5 .f-body { background: #d0c47c } .c5 .f-num { color: #524818 }
 
+/* ─── Base footer stamp ───────────────────────────────────────────────────── */
 .base-footer {
-  display: flex; justify-content: space-between;
-  margin-top: 18px;
-  font-size: 9px; color: #5a3e1a;
-  letter-spacing: 0.13em; text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 8px;
+  font-weight: 500;
+  color: rgba(227, 193, 153, 0.2);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
+/* ─── Open / Close Button ─────────────────────────────────────────────────── */
+/* DESIGN.md §5 Buttons: gradient primary → primary_container */
 .open-btn {
   display: block;
-  margin: 22px auto 0;
-  background: none;
-  border: 1px solid #6b4a1e;
-  color: #c49642;
-  font-family: 'Courier Prime', monospace;
-  font-size: 11px;
-  letter-spacing: 0.2em;
+  margin: 24px auto 0;
+  background: linear-gradient(135deg,
+    rgba(227, 193, 153, 0.1) 0%,
+    rgba(196, 150, 66,  0.06) 100%);
+  border: 1px solid rgba(227, 193, 153, 0.22);
+  color: #e3c199;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  padding: 9px 28px;
+  padding: 12px 30px;
+  min-height: 44px;
   border-radius: 4px;
   cursor: pointer;
-  transition: background 0.18s, color 0.18s;
+  touch-action: manipulation;
+  /* Hover: shift to higher surface_container tier — DESIGN.md §5 */
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
   position: relative;
   z-index: 10;
 }
-.open-btn:hover { background: #4a3010; color: #e8d098; }
-.open-btn:disabled { opacity: 0.35; cursor: default; }
+.open-btn:hover {
+  background: linear-gradient(135deg,
+    rgba(227, 193, 153, 0.18) 0%,
+    rgba(196, 150, 66,  0.12) 100%);
+  border-color: rgba(227, 193, 153, 0.38);
+  color: #f0e0b4;
+}
+.open-btn:disabled { opacity: 0.3; cursor: default; }
 
+/* ─── Modal ───────────────────────────────────────────────────────────────── */
+/* DESIGN.md §3: Glass & Gradient Rule — backdrop-filter: blur for overlays */
 .modal-overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(10,6,2,0.85);
+  background: rgba(33, 14, 11, 0.86);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 100;
   align-items: center;
   justify-content: center;
 }
 .modal-overlay.open { display: flex; }
 .modal-box {
-  background: #1e1408; border: 1px solid #5a3e1a;
-  border-radius: 10px; width: 90%; max-width: 400px;
-  padding: 22px 20px 18px; position: relative;
+  background: #1c0d09;
+  border: 1px solid rgba(227, 193, 153, 0.15);
+  border-radius: 10px;
+  width: 90%; max-width: 420px;
+  padding: 24px 22px 20px;
+  position: relative;
   animation: popIn 0.26s cubic-bezier(.4,0,.2,1);
-  font-family: 'Courier Prime', monospace;
-  max-height: 80vh; overflow-y: auto;
+  font-family: 'Work Sans', sans-serif;
+  max-height: 82vh; overflow-y: auto;
+  /* Ambient shadow on floating element */
+  box-shadow: 0 0 64px rgba(33, 14, 11, 0.9), 0 8px 24px rgba(33, 14, 11, 0.6);
 }
 @keyframes popIn {
-  from{opacity:0;transform:scale(0.94) translateY(10px)}
-  to{opacity:1;transform:scale(1) translateY(0)}
+  from { opacity: 0; transform: scale(0.94) translateY(10px) }
+  to   { opacity: 1; transform: scale(1)    translateY(0) }
 }
 .modal-close-btn {
-  position: absolute; top: 10px; right: 12px;
-  background: none; border: none; color: #7a5a28;
-  font-size: 18px; cursor: pointer; font-family: monospace;
-  padding: 2px 6px; border-radius: 4px;
+  position: absolute; top: 8px; right: 8px;
+  background: none; border: none;
+  color: rgba(227, 193, 153, 0.5);
+  font-size: 16px; cursor: pointer;
+  font-family: monospace;
+  /* 44×44px touch target — SKILL.md §2 touch-target-size */
+  min-width: 44px; min-height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px;
+  touch-action: manipulation;
+  transition: color 0.15s, background 0.15s;
 }
-.modal-close-btn:hover { background: rgba(255,255,255,0.06); color: #e8d098; }
-.modal-num { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; margin-bottom:3px; }
-.modal-title-text { font-family:'Playfair Display',serif; font-size:15px; color:#e8d098; margin-bottom:3px; padding-right:22px; }
-.modal-sep { border:none; border-top:1px solid #3a2810; margin:12px 0; }
-.empty-msg { text-align:center; color:#5a3e1a; font-size:11px; padding:20px 0; font-style:italic; }
+.modal-close-btn:hover {
+  background: rgba(227, 193, 153, 0.07);
+  color: #e3c199;
+}
+.modal-num {
+  font-family: 'Noto Serif', serif;
+  font-size: 22px; font-weight: 700; margin-bottom: 2px;
+}
+.modal-title-text {
+  font-family: 'Noto Serif', serif;
+  font-size: 15px; color: #e3c199;
+  margin-bottom: 3px; padding-right: 24px;
+  line-height: 1.4;
+}
+/* Ghost separator — DESIGN.md §4 "Ghost Border" fallback at 15% */
+.modal-sep {
+  border: none;
+  border-top: 1px solid rgba(227, 193, 153, 0.1);
+  margin: 14px 0;
+}
+.empty-msg {
+  text-align: center;
+  color: rgba(227, 193, 153, 0.28);
+  font-size: 11px; padding: 24px 0;
+  font-style: italic;
+}
 
+/* Doc list — no horizontal dividers; spacing separates items (§5 Folders & Cards) */
 .doc-item {
-  padding: 10px 0;
-  border-bottom: 1px solid #2a1e10;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(227, 193, 153, 0.07);
 }
 .doc-item:last-child { border-bottom: none; }
 .doc-title {
   display: block;
-  color: #c49642;
+  color: #d4ae78;
+  font-family: 'Work Sans', sans-serif;
   font-size: 12px;
+  font-weight: 500;
   text-decoration: none;
-  margin-bottom: 4px;
-  line-height: 1.4;
+  margin-bottom: 5px;
+  line-height: 1.45;
+  touch-action: manipulation;
+  transition: color 0.15s;
 }
-.doc-title:hover { color: #e8d098; text-decoration: underline; }
+.doc-title:hover { color: #e3c199; text-decoration: underline; }
 .doc-desc {
-  color: #7a5a28;
-  font-size: 10px;
-  line-height: 1.5;
+  color: rgba(227, 193, 153, 0.55);
+  font-family: 'Work Sans', sans-serif;
+  font-size: 12px;
+  line-height: 1.6;
 }
 
+/* ─── Page Footer ─────────────────────────────────────────────────────────── */
 .page-footer {
   width: 100%;
   max-width: 800px;
-  padding: 14px 24px;
-  background: #1e1408;
-  border: 1px solid #3a2810;
-  border-top: none;
-  border-radius: 0 0 10px 10px;
+  padding: 14px 28px;
+  background: #1c0d09;
+  border-top: 1px solid rgba(227, 193, 153, 0.1);
+  border-radius: 0 0 12px 12px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 6px 20px;
-  font-family: 'Courier Prime', monospace;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 8px;
-  color: #5a3e1a;
-  letter-spacing: 0.12em;
+  font-weight: 400;
+  color: rgba(227, 193, 153, 0.28);
+  letter-spacing: 0.15em;
   text-transform: uppercase;
 }
-.page-footer span { line-height: 1.6; }
+.page-footer span { line-height: 1.65; }
 
+/* ─── Focus Visible — keyboard nav (SKILL.md §1 focus-states) ────────────── */
+/* Remove default outline; replace with on-brand visible ring */
+:focus { outline: none; }
+
+.open-btn:focus-visible,
+.modal-close-btn:focus-visible,
+.doc-title:focus-visible {
+  outline: 2px solid rgba(227, 193, 153, 0.65);
+  outline-offset: 3px;
+}
+.folder:focus-visible {
+  outline: 2px solid rgba(227, 193, 153, 0.65);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ─── Reduced Motion (SKILL.md §7 reduced-motion) ────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .lid { transition: none; }
+  .folder { transition: opacity 0.01ms, transform 0.01ms; }
+  .folder:hover { transform: none !important; }
+  .folder:hover .f-tab { transform: none; }
+  .open-btn { transition: none; }
+  @keyframes popIn {
+    from { opacity: 0; transform: none; }
+    to   { opacity: 1; transform: none; }
+  }
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────────────── */
 @media (max-width: 600px) {
-  body { padding: 0 10px 24px; }
-  .wrap { padding: 16px 10px 20px; }
-  .inst-header { padding: 10px 14px; gap: 10px; }
-  .inst-organ { font-size: 11px; }
-  .inst-sector { font-size: 8px; }
-  .page-footer { flex-direction: column; gap: 4px; align-items: flex-start; font-size: 7px; padding: 10px 14px; }
-  .lid-title { font-size: 18px; }
-  .lid-sub { font-size: 8px; }
-  .folders-row { gap: 7px; }
+  body { padding: 16px 10px 32px; }
+  .inst-header { padding: 12px 16px; gap: 12px; border-radius: 8px 8px 0 0; }
+  .inst-organ { font-size: 12px; }
+  .wrap { padding: 20px 12px 24px; }
+  .lid-title { font-size: 2rem; }
+  .lid-acervo { font-size: 9px; padding: 0 14px; margin-top: 8px; }
+  .lid-sub { font-size: 7px; }
+  .folders-row { gap: 8px; }
   .folder { max-width: none; }
   .f-num { font-size: 22px; }
-  .f-name { font-size: 8px; }
+  .f-name { font-size: 7px; letter-spacing: 0.07em; }
   .f-body { min-height: 76px; padding: 10px 4px 8px; }
-  .base { padding: 14px 10px 14px; }
-  .modal-box { padding: 16px 14px 14px; max-height: 80vh; }
+  .base { padding: 16px 12px 16px; }
+  .modal-box { padding: 18px 16px 16px; max-height: 80vh; }
   .modal-num { font-size: 18px; }
   .modal-title-text { font-size: 13px; }
-  .open-btn { margin-top: 14px; padding: 8px 20px; font-size: 10px; }
+  .open-btn { margin-top: 16px; padding: 9px 22px; font-size: 9px; }
+  .page-footer { flex-direction: column; gap: 5px; padding: 10px 16px; font-size: 7px; border-radius: 0 0 8px 8px; }
 }
