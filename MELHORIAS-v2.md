@@ -12,7 +12,7 @@ Com todas as 10 melhorias da [primeira rodada](MELHORIAS.md) implementadas, o po
 
 ## TIER 1 — Alto Impacto, Baixo Esforço
 
-### 1. PWA Manifest + Prompt de Instalação
+### 1. ~~PWA Manifest + Prompt de Instalação~~ ✅
 
 **Por quê**: O Service Worker (`sw.js`) já está registrado, mas sem `manifest.json` o site não pode ser instalado como app standalone. Fiscais em inspeções de campo se beneficiariam de tocar um ícone na tela inicial do celular para abrir a maleta offline, em vez de digitar uma URL.
 
@@ -26,7 +26,7 @@ Com todas as 10 melhorias da [primeira rodada](MELHORIAS.md) implementadas, o po
 
 ---
 
-### 2. Open Graph / Preview de Links no WhatsApp
+### 2. ~~Open Graph / Preview de Links no WhatsApp~~ ✅
 
 **Por quê**: Quando fiscais compartilham um link via WhatsApp ou e-mail, o destinatário vê apenas uma URL nua sem título, descrição ou imagem. Adicionar meta tags OG faz o link aparecer como "Maleta Digital da Fiscalização — UFPI" com descrição e logo institucional. Isso é crítico para o fluxo de compartilhamento que é o principal canal de distribuição do portal.
 
@@ -39,7 +39,7 @@ Com todas as 10 melhorias da [primeira rodada](MELHORIAS.md) implementadas, o po
 
 ---
 
-### 3. Toast Notifications para Feedback Visual
+### 3. ~~Toast Notifications para Feedback Visual~~ ✅
 
 **Por quê**: Atualmente, ao clicar "🔗 Link" para copiar a URL de um documento, o texto do botão muda para "✓ Copiado" por 1,5s — fácil de perder, especialmente no mobile. Não há feedback para outras ações. Um toast sutil na parte inferior da tela oferece confirmação clara e acessível.
 
@@ -53,7 +53,7 @@ Com todas as 10 melhorias da [primeira rodada](MELHORIAS.md) implementadas, o po
 
 ---
 
-### 4. Estado "Nenhum Resultado" na Busca
+### 4. ~~Estado "Nenhum Resultado" na Busca~~ ✅
 
 **Por quê**: Se o usuário digita uma busca sem correspondência, todas as pastas esmaem para 0.2 de opacidade sem nenhuma mensagem explícita. O usuário pode achar que a interface quebrou. Leitores de tela não recebem nenhum anúncio.
 
@@ -68,7 +68,7 @@ Com todas as 10 melhorias da [primeira rodada](MELHORIAS.md) implementadas, o po
 
 ## TIER 2 — Impacto Médio, Esforço Médio
 
-### 5. CSS Custom Properties para Design Tokens
+### 5. ~~CSS Custom Properties para Design Tokens~~ ✅
 
 **Por quê**: O DESIGN.md define tokens claros (`#210e0b`, `#e3c199`, `#2b1613`, etc.), mas estes estão hardcoded como valores hexadecimais literais 80+ vezes no `style.css`. Alterar uma cor exige find-and-replace em 1025 linhas. Extraí-los para custom properties no `:root` torna futura tematização, modo de alto contraste ou ajustes triviais, além de reduzir diretamente a fricção de manutenção.
 
@@ -111,7 +111,7 @@ Com todas as 10 melhorias da [primeira rodada](MELHORIAS.md) implementadas, o po
 
 ---
 
-### 8. Versionamento de Cache do Service Worker
+### 8. ~~Versionamento de Cache do Service Worker~~ ✅
 
 **Por quê**: O `sw.js` usa `CACHE_NAME = 'maleta-v1'` estático. Quando o conteúdo é atualizado (novos PDFs, novos dados), não há mecanismo de invalidação. Usuários com cache antigo veem conteúdo desatualizado até limparem manualmente. Isso é especialmente problemático para fiscais offline em campo.
 
@@ -125,7 +125,7 @@ Com todas as 10 melhorias da [primeira rodada](MELHORIAS.md) implementadas, o po
 
 ---
 
-### 9. Retorno de Foco ao Fechar Modal
+### 9. ~~Retorno de Foco ao Fechar Modal~~ ✅
 
 **Por quê**: Quando o modal é fechado (Escape ou clique fora), o foco não retorna à pasta que foi clicada. Isso quebra o fluxo de navegação por teclado e é uma preocupação de acessibilidade WCAG 2.4.3 (Focus Order). Usuários de leitores de tela perdem sua posição na página.
 
