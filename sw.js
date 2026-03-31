@@ -1,4 +1,5 @@
-const CACHE_NAME = 'maleta-v1';
+// ⚠️ Sincronizar com LAST_UPDATED em data.js ao atualizar conteúdo
+const CACHE_NAME = 'maleta-2026-03-30';
 
 const SHELL = [
   './',

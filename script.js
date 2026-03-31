@@ -308,8 +308,10 @@ function openModal(i, highlightQuery) {
 function closeModal() {
   const overlay = document.getElementById("modalOv");
   overlay.classList.remove("open");
+  const folderToFocus = currentModalFolder >= 0 ? document.getElementById(`folder-${currentModalFolder}`) : null;
   currentModalFolder = -1;
   removeFocusTrap();
+  if (folderToFocus) folderToFocus.focus();
   if (isOpen) {
     history.replaceState(null, "", window.location.pathname);
   }

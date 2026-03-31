@@ -15,6 +15,22 @@
    ghost-border         : rgba(227,193,153,0.15)
 ──────────────────────────────────────────────────────────────────────────── */
 
+:root {
+  --surface: #210e0b;
+  --surface-container-low: #2b1613;
+  --surface-container: #3a1f1a;
+  --surface-container-high: #472f2b;
+  --surface-deep: #1c0d09;
+  --primary: #e3c199;
+  --primary-dark: #c49642;
+  --on-primary: #210e0b;
+  --on-surface: #e3c199;
+  --on-surface-variant: rgba(227, 193, 153, 0.55);
+  --on-surface-muted: rgba(227, 193, 153, 0.32);
+  --ghost-border: rgba(227, 193, 153, 0.15);
+  --outline-variant: rgba(227, 193, 153, 0.1);
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { min-height: 100%; }
 
@@ -23,8 +39,8 @@ html { min-height: 100%; }
   position: absolute;
   top: -100px;
   left: 16px;
-  background: #e3c199;
-  color: #210e0b;
+  background: var(--primary);
+  color: var(--on-primary);
   padding: 8px 16px;
   font-family: 'Space Grotesk', sans-serif;
   font-size: 12px;
@@ -36,7 +52,7 @@ html { min-height: 100%; }
 }
 .skip-link:focus {
   top: 0;
-  outline: 2px solid #e3c199;
+  outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
 
@@ -57,7 +73,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #210e0b;
+  background: var(--surface);
   padding: 40px 16px 56px;
   font-family: 'Work Sans', sans-serif;
 }
@@ -70,8 +86,8 @@ body {
   align-items: center;
   gap: 18px;
   padding: 20px 28px 20px 26px;
-  background: #1c0d09;
-  border-bottom: 1px solid rgba(227, 193, 153, 0.1);
+  background: var(--surface-deep);
+  border-bottom: 1px solid var(--outline-variant);
   border-radius: 12px 12px 0 0;
   position: relative;
   overflow: hidden;
@@ -82,7 +98,7 @@ body {
   position: absolute;
   left: 0; top: 0; bottom: 0;
   width: 3px;
-  background: linear-gradient(180deg, #f0d698 0%, #c49642 50%, #a07828 100%);
+  background: linear-gradient(180deg, #f0d698 0%, var(--primary-dark) 50%, #a07828 100%);
   border-radius: 12px 0 0 0;
 }
 .inst-logo {
@@ -97,7 +113,7 @@ body {
   font-family: 'Noto Serif', serif;
   font-size: 15px;
   font-weight: 700;
-  color: #e3c199;
+  color: var(--primary);
   letter-spacing: 0.03em;
   line-height: 1.2;
 }
@@ -112,13 +128,13 @@ body {
 
 /* ─── Wrap — wooden surface behind briefcase ──────────────────────────────── */
 .wrap {
-  background: #2b1613;
+  background: var(--surface-container-low);
   background-image:
     repeating-linear-gradient(90deg, rgba(0,0,0,0.05) 0px, rgba(0,0,0,0.05) 1px, transparent 1px, transparent 32px),
     repeating-linear-gradient(0deg,  rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 32px);
   border-radius: 0;
-  border-left:  1px solid rgba(227, 193, 153, 0.07);
-  border-right: 1px solid rgba(227, 193, 153, 0.07);
+  border-left:  1px solid var(--outline-variant);
+  border-right: 1px solid var(--outline-variant);
   padding: 36px 24px 40px;
   width: 100%;
   max-width: 800px;
@@ -181,13 +197,13 @@ body {
 /* ─── Lid ─────────────────────────────────────────────────────────────────── */
 .lid {
   width: 100%;
-  background: #3a1f1a;
+  background: var(--surface-container);
   background-image: repeating-linear-gradient(180deg,
     rgba(255, 255, 255, 0.016) 0px,
     rgba(255, 255, 255, 0.016) 1px,
     transparent 1px,
     transparent 5px);
-  border: 1px solid rgba(227, 193, 153, 0.13);
+  border: 1px solid var(--ghost-border);
   border-top-color: rgba(227, 193, 153, 0.28); /* stronger top-edge highlight */
   border-bottom: none;
   border-radius: 12px 12px 0 0;
@@ -222,7 +238,7 @@ body {
   font-family: 'Noto Serif', serif;
   font-size: clamp(1.45rem, 5.5vw, 2.6rem);
   font-weight: 700;
-  color: #e3c199;
+  color: var(--primary);
   letter-spacing: 0.06em;
   line-height: 1.15;
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
@@ -316,13 +332,13 @@ body {
 /* ─── Base / Briefcase Interior ───────────────────────────────────────────── */
 .base {
   width: 100%;
-  background: #2b1613;
+  background: var(--surface-container-low);
   background-image: repeating-linear-gradient(180deg,
     rgba(255, 255, 255, 0.016) 0px,
     rgba(255, 255, 255, 0.016) 1px,
     transparent 1px,
     transparent 5px);
-  border: 1px solid rgba(227, 193, 153, 0.13);
+  border: 1px solid var(--ghost-border);
   border-top: none;
   border-radius: 0 0 14px 14px;
   padding: 28px 24px 24px;
@@ -351,8 +367,8 @@ body {
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(227, 193, 153, 0.15);
-  color: #e3c199;
+  border-bottom: 1px solid var(--ghost-border);
+  color: var(--on-surface);
   font-family: 'Space Grotesk', sans-serif;
   font-size: 12px;
   font-weight: 400;
@@ -475,6 +491,8 @@ body {
   color: rgba(227, 193, 153, 0.72);
   margin-top: 10px;
 }
+
+/* ─── Keyboard Shortcuts Help Popover (#7) ──────────────────────────────── */
 
 /* ─── Dimmed Folder (search no-match) ────────────────────────────────────── */
 .folder--dimmed.visible { opacity: 0.2; pointer-events: none; }
