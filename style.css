@@ -859,6 +859,8 @@ body {
   .open-btn { transition: none; transform: none !important; }
   .toast { transition: none; transform: none; }
   .toast--visible { transform: none; }
+  .shortcuts-popover { transition: none; transform: none; }
+  .shortcuts-popover--visible { transform: none; }
   @keyframes popIn {
     from { opacity: 0; }
     to   { opacity: 1; }
@@ -1005,6 +1007,118 @@ body {
   color: rgba(227, 193, 153, 0.72);
 }
 
+/* ─── Keyboard Shortcuts Popover (#7) ────────────────────────────────────── */
+.shortcuts-popover {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 250;
+  background: rgba(43, 22, 19, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--ghost-border);
+  border-radius: 10px;
+  padding: 18px 22px 14px;
+  min-width: 240px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.22s, transform 0.22s cubic-bezier(.4, 0, .2, 1);
+}
+.shortcuts-popover--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.shortcuts-title {
+  font-family: 'Noto Serif', serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+.shortcuts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.shortcut-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.shortcut-row dt {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  color: var(--on-surface-variant);
+}
+.shortcut-row dd {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 11px;
+  color: rgba(227, 193, 153, 0.65);
+  text-align: right;
+}
+.shortcuts-popover kbd {
+  display: inline-block;
+  background: rgba(227, 193, 153, 0.1);
+  border: 1px solid rgba(227, 193, 153, 0.2);
+  border-radius: 3px;
+  padding: 1px 6px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--primary);
+  line-height: 1.6;
+}
+.shortcuts-close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: none;
+  border: none;
+  color: rgba(227, 193, 153, 0.4);
+  font-size: 12px;
+  cursor: pointer;
+  font-family: monospace;
+  min-width: 28px;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color 0.15s;
+}
+.shortcuts-close:hover {
+  color: var(--primary);
+}
+
+/* ─── Print Index Button (#6) ────────────────────────────────────────────── */
+.print-index-btn {
+  background: transparent;
+  border: 1px solid var(--ghost-border);
+  color: rgba(227, 193, 153, 0.48);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: border-color 0.18s, color 0.15s;
+}
+.print-index-btn:hover {
+  border-color: rgba(227, 193, 153, 0.4);
+  color: rgba(227, 193, 153, 0.72);
+}
+
+/* Hide print index on screen */
+#printIndex { display: none; }
+
 /* ─── Print View (#9) — clean index for administrative processes ─────────── */
 @media print {
   * { box-shadow: none !important; text-shadow: none !important; }
@@ -1020,7 +1134,8 @@ body {
   .skip-link, .sr-only, .handle-outer, .lid, .lid-latch,
   .lid-hinges, .open-btn, .modal-overlay, .search-wrap,
   .f-paper, .f-paper2, .f-tab, #toastContainer,
-  .install-btn { display: none !important; }
+  .install-btn, .print-index-btn,
+  .folders-row, .shortcuts-popover { display: none !important; }
 
   .inst-header {
     background: none !important;
@@ -1110,4 +1225,73 @@ body {
     padding: 8px 0 !important;
   }
   .footer-link { color: #333 !important; }
+
+  /* ─── Print Index (#6) ─────────────────────────────────────────────────── */
+  #printIndex {
+    display: block !important;
+    page-break-before: avoid;
+    margin-top: 24px;
+  }
+  .print-index-title {
+    font-family: 'Noto Serif', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #210e0b;
+    margin-bottom: 4px;
+  }
+  .print-index-date {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  .print-folder-section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 18px;
+  }
+  .print-folder-name {
+    font-family: 'Noto Serif', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #210e0b;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+  }
+  .print-doc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 10px;
+    color: #333;
+  }
+  .print-doc-table th {
+    text-align: left;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #666;
+    border-bottom: 1px solid #999;
+    padding: 4px 6px;
+  }
+  .print-doc-table td {
+    padding: 5px 6px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+    line-height: 1.4;
+  }
+  .print-doc-table tr:last-child td { border-bottom: none; }
+  .print-path {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 8px;
+    color: #888;
+    word-break: break-all;
+  }
+  .print-empty {
+    font-style: italic;
+    color: #999;
+  }
 }

@@ -161,6 +161,8 @@ function openCase(skipAnimation) {
     btn.disabled = false;
     btn.textContent = "↺ Fechar maleta";
     searchWrap.classList.add("visible");
+    const pBtn = document.getElementById("printIndexBtn");
+    if (pBtn) pBtn.style.display = "inline-flex";
     announce("Maleta aberta");
     // Restore transitions after a frame
     requestAnimationFrame(() => {
@@ -186,6 +188,8 @@ function openCase(skipAnimation) {
     btn.disabled = false;
     btn.textContent = "↺ Fechar maleta";
     searchWrap.classList.add("visible");
+    const pBtn = document.getElementById("printIndexBtn");
+    if (pBtn) pBtn.style.display = "inline-flex";
     announce("Maleta aberta");
   }, 820);
 
@@ -209,6 +213,8 @@ function resetCase() {
     el.setAttribute("tabindex", "-1");
   });
   searchWrap.classList.remove("visible");
+  const pBtn = document.getElementById("printIndexBtn");
+  if (pBtn) pBtn.style.display = "none";
   searchInput.value = "";
   // Remove dimmed state
   folders.forEach((_, i) => {
@@ -399,6 +405,144 @@ btn.addEventListener("click", () => {
   sessionStorage.setItem("maletaVisited", "1");
 });
 
+/* ─── Keyboard Shortcuts (#7) ───────────────────────────────────────────── */
+function isTyping() {
+  const tag = document.activeElement?.tagName;
+  return tag === "INPUT" || tag === "TEXTAREA" || document.activeElement?.isContentEditable;
+}
+
+function toggleShortcutsHelp() {
+  let popover = document.getElementById("shortcutsHelp");
+  if (popover) {
+    popover.remove();
+    return;
+  }
+  popover = document.createElement("div");
+  popover.id = "shortcutsHelp";
+  popover.className = "shortcuts-popover";
+  popover.setAttribute("role", "dialog");
+  popover.setAttribute("aria-label", "Atalhos de teclado");
+  popover.innerHTML = `
+    <h3 class="shortcuts-title">Atalhos de teclado</h3>
+    <dl class="shortcuts-list">
+      <div class="shortcut-row"><dt><kbd>/</kbd> ou <kbd>Ctrl+K</kbd></dt><dd>Buscar documento</dd></div>
+      <div class="shortcut-row"><dt><kbd>Esc</kbd></dt><dd>Fechar modal / limpar busca</dd></div>
+      <div class="shortcut-row"><dt><kbd>1</kbd>–<kbd>5</kbd></dt><dd>Abrir pasta correspondente</dd></div>
+      <div class="shortcut-row"><dt><kbd>?</kbd></dt><dd>Mostrar/ocultar atalhos</dd></div>
+    </dl>
+    <button class="shortcuts-close" aria-label="Fechar atalhos">✕</button>
+  `;
+  document.body.appendChild(popover);
+  requestAnimationFrame(() => popover.classList.add("shortcuts-popover--visible"));
+  popover.querySelector(".shortcuts-close").addEventListener("click", () => popover.remove());
+}
+
+document.addEventListener("keydown", (e) => {
+  // Ctrl+K: focus search (works even when typing)
+  if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+    e.preventDefault();
+    if (isOpen) searchInput.focus();
+    return;
+  }
+
+  // Escape while search is focused: clear and blur
+  if (e.key === "Escape" && document.activeElement === searchInput) {
+    searchInput.value = "";
+    searchInput.dispatchEvent(new Event("input"));
+    searchInput.blur();
+    return;
+  }
+
+  // Don't trigger shortcuts while typing in inputs
+  if (isTyping()) return;
+
+  // "/" : focus search
+  if (e.key === "/" && isOpen) {
+    e.preventDefault();
+    searchInput.focus();
+    return;
+  }
+
+  // "?" : toggle shortcuts help
+  if (e.key === "?") {
+    e.preventDefault();
+    toggleShortcutsHelp();
+    return;
+  }
+
+  // 1-5: open folder directly
+  const num = parseInt(e.key, 10);
+  if (num >= 1 && num <= 5 && isOpen && currentModalFolder === -1) {
+    const idx = num - 1;
+    if (idx < folders.length) {
+      e.preventDefault();
+      openModal(idx);
+    }
+  }
+});
+
+/* ─── Print Index (#6) ──────────────────────────────────────────────────── */
+function buildPrintIndex() {
+  let existing = document.getElementById("printIndex");
+  if (existing) existing.remove();
+
+  const container = document.createElement("div");
+  container.id = "printIndex";
+
+  const [y, m, d] = LAST_UPDATED.split("-");
+  const dateStr = `${d}/${m}/${y}`;
+  container.innerHTML = `
+    <h2 class="print-index-title">Índice de Documentos</h2>
+    <p class="print-index-date">Gerado em: ${new Date().toLocaleDateString("pt-BR")} · Última atualização do acervo: ${dateStr}</p>
+  `;
+
+  folders.forEach((f, i) => {
+    const section = document.createElement("div");
+    section.className = "print-folder-section";
+
+    let docsHtml = "";
+    if (f.docs.length === 0) {
+      docsHtml = `<tr><td colspan="4" class="print-empty">${f.placeholder || "Nenhum documento disponível ainda."}</td></tr>`;
+    } else {
+      docsHtml = f.docs.map((doc) => {
+        const meta = [];
+        if (doc.date) { const [dy, dm, dd] = doc.date.split("-"); meta.push(`${dd}/${dm}/${dy}`); }
+        if (doc.size) meta.push(doc.size);
+        return `<tr>
+          <td>${doc.title}</td>
+          <td>${doc.description}</td>
+          <td>${meta.join(" · ") || "—"}</td>
+          <td class="print-path">${doc.file}</td>
+        </tr>`;
+      }).join("");
+    }
+
+    section.innerHTML = `
+      <h3 class="print-folder-name">Pasta ${i + 1} — ${f.name}</h3>
+      <table class="print-doc-table">
+        <thead><tr><th>Título</th><th>Descrição</th><th>Data / Tamanho</th><th>Arquivo</th></tr></thead>
+        <tbody>${docsHtml}</tbody>
+      </table>
+    `;
+    container.appendChild(section);
+  });
+
+  document.body.appendChild(container);
+}
+
+function removePrintIndex() {
+  const el = document.getElementById("printIndex");
+  if (el) el.remove();
+}
+
+window.addEventListener("beforeprint", buildPrintIndex);
+window.addEventListener("afterprint", removePrintIndex);
+
+function handlePrintIndex() {
+  buildPrintIndex();
+  window.print();
+}
+
 /* ─── Footer ─────────────────────────────────────────────────────────────── */
 (function setFooter() {
   const footer = document.getElementById("pageFooter");
@@ -408,8 +552,11 @@ btn.addEventListener("click", () => {
   footer.innerHTML = `
     <span>Última atualização: ${dateStr}</span>
     <span>Acesso regulado pela <a class="footer-link" href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12527.htm" target="_blank" rel="noopener noreferrer">Lei nº 12.527/2011 – Lei de Acesso à Informação</a></span>
+    <button class="print-index-btn" id="printIndexBtn" style="display:none" aria-label="Imprimir índice de documentos">Imprimir índice</button>
     <button class="install-btn" id="installBtn" style="display:none" aria-label="Instalar aplicativo">Instalar app</button>
   `;
   const installBtn = document.getElementById("installBtn");
   if (installBtn) installBtn.addEventListener("click", handleInstallClick);
+  const printIndexBtn = document.getElementById("printIndexBtn");
+  if (printIndexBtn) printIndexBtn.addEventListener("click", handlePrintIndex);
 })();

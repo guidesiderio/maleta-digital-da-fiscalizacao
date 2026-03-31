@@ -82,7 +82,7 @@ Com todas as 10 melhorias da [primeira rodada](MELHORIAS.md) implementadas, o po
 
 ---
 
-### 6. Print View Completo com Índice de Documentos
+### 6. ~~Print View Completo com Índice de Documentos~~ ✅
 
 **Por quê**: O `@media print` atual esconde o modal e mostra apenas o grid de pastas com contagem. Porém, fiscais querem imprimir um **índice completo de todos os documentos** com títulos, descrições, datas e tamanhos para anexar a processos administrativos. A view de impressão atual não mostra detalhes dos documentos.
 
@@ -96,7 +96,7 @@ Com todas as 10 melhorias da [primeira rodada](MELHORIAS.md) implementadas, o po
 
 ---
 
-### 7. Atalhos de Teclado
+### 7. ~~Atalhos de Teclado~~ ✅
 
 **Por quê**: Usuários frequentes (fiscais que acessam diariamente) se beneficiariam de atalhos de teclado. O suporte atual se limita a Tab/Enter/Escape. Atalhos adicionais tornam a interface mais profissional e aceleram a navegação.
 
