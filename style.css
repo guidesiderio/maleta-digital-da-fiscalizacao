@@ -841,6 +841,8 @@ body {
   .folder:hover { transform: none !important; filter: none !important; }
   .folder:hover .f-tab { transform: none; }
   .open-btn { transition: none; transform: none !important; }
+  .toast { transition: none; transform: none; }
+  .toast--visible { transform: none; }
   @keyframes popIn {
     from { opacity: 0; }
     to   { opacity: 1; }
@@ -918,6 +920,75 @@ body {
   }
 }
 
+/* ─── Toast Notifications (#3) ───────────────────────────────────────────── */
+#toastContainer {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+.toast {
+  background: rgba(43, 22, 19, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(227, 193, 153, 0.15);
+  color: #e3c199;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 10px 22px;
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.28s, transform 0.28s cubic-bezier(.4, 0, .2, 1);
+  pointer-events: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+}
+.toast--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Search "No Results" Message (#4) ──────────────────────────────────── */
+.search-no-results {
+  color: rgba(227, 193, 153, 0.45);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  text-align: center;
+  padding: 10px 0 2px;
+  font-style: italic;
+}
+
+/* ─── Install App Button (PWA #1) ───────────────────────────────────────── */
+.install-btn {
+  background: transparent;
+  border: 1px solid rgba(227, 193, 153, 0.15);
+  color: rgba(227, 193, 153, 0.48);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: border-color 0.18s, color 0.15s;
+}
+.install-btn:hover {
+  border-color: rgba(227, 193, 153, 0.4);
+  color: rgba(227, 193, 153, 0.72);
+}
+
 /* ─── Print View (#9) — clean index for administrative processes ─────────── */
 @media print {
   * { box-shadow: none !important; text-shadow: none !important; }
@@ -932,7 +1003,8 @@ body {
   /* Hide UI chrome */
   .skip-link, .sr-only, .handle-outer, .lid, .lid-latch,
   .lid-hinges, .open-btn, .modal-overlay, .search-wrap,
-  .f-paper, .f-paper2, .f-tab { display: none !important; }
+  .f-paper, .f-paper2, .f-tab, #toastContainer,
+  .install-btn { display: none !important; }
 
   .inst-header {
     background: none !important;

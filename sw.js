@@ -6,6 +6,7 @@ const SHELL = [
   'style.css',
   'data.js',
   'script.js',
+  'manifest.json',
   'assets/159ad273727527.Y3JvcCwxNjI3LDEyNzIsMCww.png',
 ];
 

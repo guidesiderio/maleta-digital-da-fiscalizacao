@@ -1,6 +1,48 @@
 const COLORS = ["c1", "c2", "c3", "c4", "c5"];
 const NUM_HEX = ["#cc9a52", "#6d8e60", "#8078bc", "#cc6a48", "#4a9aac"];
 
+/* ─── Toast Notifications (#3) ──────────────────────────────────────────── */
+const toastContainer = document.createElement("div");
+toastContainer.id = "toastContainer";
+toastContainer.setAttribute("aria-live", "assertive");
+document.body.appendChild(toastContainer);
+
+function showToast(message, duration = 2000) {
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = message;
+  toastContainer.appendChild(toast);
+  requestAnimationFrame(() => toast.classList.add("toast--visible"));
+  setTimeout(() => {
+    toast.classList.remove("toast--visible");
+    toast.addEventListener("transitionend", () => toast.remove(), { once: true });
+    setTimeout(() => toast.remove(), 400);
+  }, duration);
+}
+
+/* ─── PWA Install Prompt (#1) ───────────────────────────────────────────── */
+let deferredInstallPrompt = null;
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  const installBtn = document.getElementById("installBtn");
+  if (installBtn) installBtn.style.display = "inline-flex";
+});
+
+function handleInstallClick() {
+  if (!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  deferredInstallPrompt.userChoice.then((choice) => {
+    if (choice.outcome === "accepted") {
+      showToast("App instalado com sucesso!");
+    }
+    deferredInstallPrompt = null;
+    const installBtn = document.getElementById("installBtn");
+    if (installBtn) installBtn.style.display = "none";
+  });
+}
+
 /* ─── Accessibility announcer ────────────────────────────────────────────── */
 function announce(msg) {
   const el = document.getElementById("a11yAnnouncer");
@@ -56,6 +98,13 @@ folders.forEach((f, i) => {
   row.appendChild(div);
 });
 
+/* ─── "No results" message element (#4) ─────────────────────────────────── */
+const noResultsMsg = document.createElement("div");
+noResultsMsg.className = "search-no-results";
+noResultsMsg.setAttribute("role", "status");
+noResultsMsg.style.display = "none";
+searchWrap.appendChild(noResultsMsg);
+
 /* ─── Search / filter logic ──────────────────────────────────────────────── */
 searchInput.addEventListener("input", () => {
   const q = normalize(searchInput.value.trim());
@@ -63,6 +112,7 @@ searchInput.addEventListener("input", () => {
     folders.forEach((_, i) => {
       document.getElementById(`folder-${i}`).classList.remove("folder--dimmed");
     });
+    noResultsMsg.style.display = "none";
     return;
   }
   let matchCount = 0;
@@ -75,6 +125,13 @@ searchInput.addEventListener("input", () => {
     el.classList.toggle("folder--dimmed", !hasMatch);
     if (hasMatch) { matchCount++; lastMatchIdx = i; }
   });
+  if (matchCount === 0) {
+    noResultsMsg.textContent = `Nenhum documento encontrado para "${searchInput.value.trim()}"`;
+    noResultsMsg.style.display = "block";
+    announce(`Nenhum documento encontrado para ${searchInput.value.trim()}`);
+  } else {
+    noResultsMsg.style.display = "none";
+  }
   if (matchCount === 1 && lastMatchIdx >= 0) {
     openModal(lastMatchIdx, q);
   }
@@ -226,8 +283,7 @@ function openModal(i, highlightQuery) {
         const hash = e.currentTarget.dataset.hash;
         const url = window.location.origin + window.location.pathname + hash;
         navigator.clipboard.writeText(url).then(() => {
-          e.currentTarget.textContent = "✓ Copiado";
-          setTimeout(() => { e.currentTarget.textContent = "🔗 Link"; }, 1500);
+          showToast("Link copiado!");
         }).catch(() => {
           // Fallback: update hash so user can copy from address bar
           history.replaceState(null, "", hash);
@@ -350,5 +406,8 @@ btn.addEventListener("click", () => {
   footer.innerHTML = `
     <span>Última atualização: ${dateStr}</span>
     <span>Acesso regulado pela <a class="footer-link" href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12527.htm" target="_blank" rel="noopener noreferrer">Lei nº 12.527/2011 – Lei de Acesso à Informação</a></span>
+    <button class="install-btn" id="installBtn" style="display:none" aria-label="Instalar aplicativo">Instalar app</button>
   `;
+  const installBtn = document.getElementById("installBtn");
+  if (installBtn) installBtn.addEventListener("click", handleInstallClick);
 })();
