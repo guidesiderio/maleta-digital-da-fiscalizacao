@@ -8,12 +8,12 @@
   "background_color": "#210e0b",
   "icons": [
     {
-      "src": "assets/159ad273727527.Y3JvcCwxNjI3LDEyNzIsMCww.png",
+      "src": "assets/img/logo-ufpi.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "assets/159ad273727527.Y3JvcCwxNjI3LDEyNzIsMCww.png",
+      "src": "assets/img/logo-ufpi.png",
       "sizes": "512x512",
       "type": "image/png"
     }

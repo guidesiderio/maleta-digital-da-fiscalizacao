@@ -37,19 +37,26 @@ Sem framework, sem bundler, sem dependências externas.
 
 ```
 maleta-digital-da-fiscalizacao/
-├── index.html          # Página principal
-├── data.js             # Dados das pastas e documentos
-├── script.js           # Lógica da aplicação
-├── style.css           # Estilos e design system
-├── sw.js               # Service Worker (cache offline)
-├── manifest.json       # Manifesto PWA
-├── assets/             # Logo institucional e PDFs
-│   ├── *.png           # Logo UFPI
-│   └── *.pdf           # Documentos do acervo
-├── DESIGN.md           # Especificação do design system
-├── MELHORIAS.md        # Plano de melhorias v1
-├── MELHORIAS-v2.md     # Plano de melhorias v2
-└── CLAUDE.md           # Guia para Claude Code
+├── index.html              # Página principal
+├── manifest.json           # Manifesto PWA
+├── sw.js                   # Service Worker (cache offline)
+├── css/
+│   └── style.css           # Estilos e design system
+├── js/
+│   ├── data.js             # Dados das pastas e documentos
+│   └── script.js           # Lógica da aplicação
+├── assets/
+│   ├── img/
+│   │   └── logo-ufpi.png   # Logo institucional
+│   └── docs/
+│       └── *.pdf           # Documentos do acervo
+├── docs/
+│   ├── DESIGN.md           # Especificação do design system
+│   ├── MELHORIAS.md        # Plano de melhorias v1
+│   └── MELHORIAS-v2.md     # Plano de melhorias v2
+├── README.md               # Este arquivo
+├── CLAUDE.md               # Guia para Claude Code
+└── .gitignore              # Arquivos ignorados pelo Git
 ```
 
 ## Como Usar
@@ -71,25 +78,25 @@ Em navegadores compatíveis (Chrome, Edge), o botão **"Instalar app"** aparece 
 
 ## Como Adicionar Documentos
 
-1. Coloque o arquivo PDF na pasta `assets/`
-2. Edite `data.js` e adicione uma entrada no array `docs` da pasta correspondente:
+1. Coloque o arquivo PDF na pasta `assets/docs/`
+2. Edite `js/data.js` e adicione uma entrada no array `docs` da pasta correspondente:
    ```javascript
    {
      title: 'Título do Documento',
-     file: 'assets/nome-do-arquivo.pdf',
+     file: 'assets/docs/nome-do-arquivo.pdf',
      description: 'Descrição breve do conteúdo.',
      date: 'AAAA-MM-DD',
      size: '1,2 MB',
    }
    ```
-3. Atualize a constante `LAST_UPDATED` em `data.js` com a data atual
+3. Atualize a constante `LAST_UPDATED` em `js/data.js` com a data atual
 4. Atualize o `CACHE_NAME` em `sw.js` para corresponder (formato: `'maleta-AAAA-MM-DD'`)
 
-Para criar uma nova pasta, adicione um novo objeto ao array `folders` em `data.js`. Pastas sem documentos podem incluir um campo `placeholder` com mensagem explicativa.
+Para criar uma nova pasta, adicione um novo objeto ao array `folders` em `js/data.js`. Pastas sem documentos podem incluir um campo `placeholder` com mensagem explicativa.
 
 ## Design System
 
-O projeto segue o design system **"The Digital Dossier"**, documentado em [DESIGN.md](DESIGN.md). Princípios principais:
+O projeto segue o design system **"The Digital Dossier"**, documentado em [DESIGN.md](docs/DESIGN.md). Princípios principais:
 
 - Paleta orgânica baseada em tons de couro e madeira (marrom profundo `#210e0b` como base)
 - Tipografia editorial: Noto Serif (títulos), Work Sans (corpo), Space Grotesk (rótulos)

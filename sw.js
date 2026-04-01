@@ -1,14 +1,14 @@
-// ⚠️ Sincronizar com LAST_UPDATED em data.js ao atualizar conteúdo
-const CACHE_NAME = 'maleta-2026-03-30';
+// ⚠️ Sincronizar com LAST_UPDATED em js/data.js ao atualizar conteúdo
+const CACHE_NAME = 'maleta-2026-03-31';
 
 const SHELL = [
   './',
   'index.html',
-  'style.css',
-  'data.js',
-  'script.js',
+  'css/style.css',
+  'js/data.js',
+  'js/script.js',
   'manifest.json',
-  'assets/159ad273727527.Y3JvcCwxNjI3LDEyNzIsMCww.png',
+  'assets/img/logo-ufpi.png',
 ];
 
 // Pre-cache app shell on install

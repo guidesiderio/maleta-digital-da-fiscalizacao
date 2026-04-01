@@ -1,4 +1,4 @@
-const LAST_UPDATED = '2026-03-30';
+const LAST_UPDATED = '2026-03-31';
 
 const folders = [
   {
@@ -6,7 +6,7 @@ const folders = [
     docs: [
       {
         title: 'Manual de Gestão e Fiscalização de Contratos',
-        file: 'assets/Manual Gestão e Fiscalização.pdf',
+        file: 'assets/docs/Manual Gestão e Fiscalização.pdf',
         description: 'Guia completo sobre os procedimentos de gestão e fiscalização de contratos no âmbito da instituição.',
         date: '2026-03-15',
         size: '2,4 MB',
@@ -18,14 +18,14 @@ const folders = [
     docs: [
       {
         title: 'Portaria nº 34/2026 — PRAD',
-        file: 'assets/PORTARIA 34 2026 PRAD.pdf',
+        file: 'assets/docs/PORTARIA 34 2026 PRAD.pdf',
         description: 'Portaria da Pró-Reitoria de Administração referente a diretrizes administrativas para 2026.',
         date: '2026-03-10',
         size: '320 KB',
       },
       {
         title: 'Resolução CAD nº 186/2025',
-        file: 'assets/Res. CAD 186 - 2025 - Estabelece Diretirzes para Gestão dos Contratos no âmbito da UFPI(2)-2.pdf',
+        file: 'assets/docs/Res. CAD 186 - 2025 - Estabelece Diretirzes para Gestão dos Contratos no âmbito da UFPI(2)-2.pdf',
         description: 'Estabelece diretrizes para a gestão dos contratos no âmbito da UFPI.',
         date: '2025-12-18',
         size: '480 KB',
@@ -37,14 +37,14 @@ const folders = [
     docs: [
       {
         title: 'Lei nº 14.133/2021 — Nova Lei de Licitações',
-        file: 'assets/LEI Nº 14.133, DE 1º DE ABRIL DE 2021.pdf',
+        file: 'assets/docs/LEI Nº 14.133, DE 1º DE ABRIL DE 2021.pdf',
         description: 'Lei de Licitações e Contratos Administrativos. Substitui a Lei nº 8.666/93.',
         date: '2026-03-10',
         size: '1,1 MB',
       },
       {
         title: 'Instrução Normativa nº 05/2017',
-        file: 'assets/IN 05 2017.pdf',
+        file: 'assets/docs/IN 05 2017.pdf',
         description: 'Dispõe sobre as regras e diretrizes do procedimento de contratação de serviços sob o regime de execução indireta.',
         date: '2026-03-10',
         size: '890 KB',
