@@ -139,7 +139,7 @@ Com todas as 10 melhorias da [primeira rodada](MELHORIAS.md) implementadas, o po
 
 ## TIER 3 — Melhorias Futuras
 
-### 10. Documentação de Headers de Segurança (CSP)
+### 10. ~~Documentação de Headers de Segurança (CSP)~~ ✅
 
 **Por quê**: Como site governamental, mesmo estático, headers de segurança importam. O site carrega Google Fonts via `@import` no CSS, o que significa que uma CSP que bloqueie estilos inline ou fontes externas quebraria o site. Documentar os headers recomendados ajuda quem for fazer deploy (servidor UFPI ou GitHub Pages).
 
@@ -200,7 +200,7 @@ Com todas as 10 melhorias da [primeira rodada](MELHORIAS.md) implementadas, o po
 
 ---
 
-### 14. Carregamento Assíncrono de Google Fonts
+### 14. ~~Carregamento Assíncrono de Google Fonts~~ ✅
 
 **Por quê**: O `@import` de Google Fonts no topo do `style.css` é render-blocking. Em conexões lentas de rede institucional, isso pode adicionar 1-2 segundos ao first paint. Trocar por carregamento assíncrono melhora a performance percebida.
 
