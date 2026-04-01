@@ -31,6 +31,8 @@ O público-alvo são servidores públicos que precisam localizar documentos norm
 | PWA Manifest | Instalação como app standalone |
 | Google Fonts | Noto Serif, Work Sans, Space Grotesk |
 
+| Vercel | Hospedagem com deploy automático e headers de segurança |
+
 Sem framework, sem bundler, sem dependências externas.
 
 ## Estrutura do Projeto
@@ -39,6 +41,8 @@ Sem framework, sem bundler, sem dependências externas.
 maleta-digital-da-fiscalizacao/
 ├── index.html              # Página principal
 ├── manifest.json           # Manifesto PWA
+├── vercel.json             # Configuração Vercel (headers de segurança)
+├── favicon.ico             # Favicon principal
 ├── sw.js                   # Service Worker (cache offline)
 ├── css/
 │   └── style.css           # Estilos e design system
@@ -46,11 +50,13 @@ maleta-digital-da-fiscalizacao/
 │   ├── data.js             # Dados das pastas e documentos
 │   └── script.js           # Lógica da aplicação
 ├── assets/
+│   ├── icons/              # Favicons e ícones PWA
 │   ├── img/
 │   │   └── logo-ufpi.png   # Logo institucional
 │   └── docs/
 │       └── *.pdf           # Documentos do acervo
 ├── docs/
+│   ├── DEPLOY.md           # Guia de deploy e headers de segurança
 │   ├── DESIGN.md           # Especificação do design system
 │   ├── MELHORIAS.md        # Plano de melhorias v1
 │   └── MELHORIAS-v2.md     # Plano de melhorias v2
@@ -60,6 +66,10 @@ maleta-digital-da-fiscalizacao/
 ```
 
 ## Como Usar
+
+### Acesso online
+
+Acesse a versão em produção: **[maleta-digital-da-fiscalizacao.vercel.app](https://maleta-digital-da-fiscalizacao.vercel.app)**
 
 ### Acesso local
 
@@ -114,6 +124,10 @@ O portal segue as diretrizes do **eMAG** (Modelo de Acessibilidade em Governo El
 - Anúncios via `aria-live` para mudanças de estado
 - Suporte a `prefers-reduced-motion` para animações
 - Contraste adequado entre texto e fundo
+
+## Deploy
+
+Hospedado na **Vercel** (plano Hobby) com deploy automático a cada push na branch `main`. Headers de segurança (CSP, X-Frame-Options, etc.) configurados via `vercel.json`. Detalhes completos em [DEPLOY.md](docs/DEPLOY.md).
 
 ## Licença
 

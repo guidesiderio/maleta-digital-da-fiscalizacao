@@ -1,6 +1,19 @@
 # Guia de Deploy — Maleta Digital da Fiscalização
 
-Este documento descreve os **headers HTTP de segurança** recomendados para o deploy em produção, seguindo boas práticas para sites governamentais brasileiros.
+Este documento descreve a **hospedagem** e os **headers HTTP de segurança** recomendados para o deploy em produção, seguindo boas práticas para sites governamentais brasileiros.
+
+---
+
+## Hospedagem
+
+| Item | Valor |
+|---|---|
+| **Plataforma** | Vercel (plano Hobby) |
+| **Repositório** | `guidesiderio/maleta-digital-da-fiscalizacao` |
+| **Branch de produção** | `main` |
+| **URL de produção** | `maleta-digital-da-fiscalizacao.vercel.app` |
+
+O deploy é automático a cada push na branch `main`. A configuração de headers de segurança é feita via `vercel.json` na raiz do projeto.
 
 ---
 
@@ -43,6 +56,30 @@ Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'
 ---
 
 ## Configuração por Plataforma
+
+### Vercel (`vercel.json`) — Plataforma atual
+
+Os headers de segurança estão configurados no arquivo `vercel.json` na raiz do projeto. Eles são aplicados automaticamente a cada deploy.
+
+```json
+{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
+        { "key": "X-XSS-Protection", "value": "0" }
+      ]
+    }
+  ]
+}
+```
+
+---
 
 ### Apache (`.htaccess`)
 
