@@ -1,2 +1,26 @@
-.claude
-.playwright-mcp
+# Claude Code
+.claude/
+.playwright-mcp/
+
+# Sistema operacional
+Thumbs.db
+.DS_Store
+Desktop.ini
+ehthumbs.db
+
+# IDEs e editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Dependências (caso futuro)
+node_modules/
+
+# Variáveis de ambiente
+.env
+.env.*
