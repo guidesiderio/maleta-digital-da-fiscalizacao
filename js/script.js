@@ -150,7 +150,6 @@ function openCase(skipAnimation) {
   if (skipAnimation) {
     lid.style.transition = "none";
     lid.classList.add("opened");
-    lid.style.visibility = "hidden";
     folders.forEach((_, i) => {
       const el = document.getElementById(`folder-${i}`);
       el.style.transition = "none";
@@ -192,10 +191,6 @@ function openCase(skipAnimation) {
     if (pBtn) pBtn.style.display = "inline-flex";
     announce("Maleta aberta");
   }, 820);
-
-  setTimeout(() => {
-    lid.style.visibility = "hidden";
-  }, 900);
 }
 
 btn.addEventListener("click", () => {
@@ -220,7 +215,6 @@ function resetCase() {
   folders.forEach((_, i) => {
     document.getElementById(`folder-${i}`).classList.remove("folder--dimmed");
   });
-  lid.style.visibility = "visible";
   setTimeout(() => {
     lid.classList.remove("opened");
     btn.textContent = "▶ Abrir maleta";
@@ -300,6 +294,7 @@ function openModal(i, highlightQuery) {
 
   const overlay = document.getElementById("modalOv");
   overlay.classList.add("open");
+  document.body.classList.add("modal-open");
 
   // Focus trap setup
   const closeBtn = document.getElementById("mClose");
@@ -314,6 +309,7 @@ function openModal(i, highlightQuery) {
 function closeModal() {
   const overlay = document.getElementById("modalOv");
   overlay.classList.remove("open");
+  document.body.classList.remove("modal-open");
   const folderToFocus = currentModalFolder >= 0 ? document.getElementById(`folder-${currentModalFolder}`) : null;
   currentModalFolder = -1;
   removeFocusTrap();

@@ -158,7 +158,6 @@ body {
   position: relative;
   width: 100%;
   transform-style: preserve-3d;
-  overflow: hidden;
 }
 
 /* ─── Handle ──────────────────────────────────────────────────────────────── */
@@ -194,6 +193,19 @@ body {
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
+/* Hide and collapse handle when lid is open */
+.case-wrap:has(.lid.opened) .handle-outer {
+  opacity: 0;
+  max-height: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease 0.1s, max-height 0.01s ease 0.85s;
+}
+.handle-outer {
+  max-height: 50px;
+  overflow: hidden;
+  transition: opacity 0.3s ease, max-height 0.01s ease;
+}
+
 /* ─── Lid ─────────────────────────────────────────────────────────────────── */
 .lid {
   width: 100%;
@@ -215,16 +227,38 @@ body {
   justify-content: center;
   transform-origin: bottom center;
   transform: rotateX(0deg);
-  transition: transform 0.9s cubic-bezier(.4, 0, .2, 1);
+  max-height: 500px;
+  overflow: hidden;
+  transition: transform 0.85s cubic-bezier(.32, 0, .15, 1),
+              opacity 0.25s ease 0.55s,
+              max-height 0.01s ease,
+              padding 0.01s ease;
   position: relative;
   z-index: 5;
   backface-visibility: hidden;
-  transform-style: preserve-3d;
   box-shadow:
     inset 0 2px 0 rgba(255, 255, 255, 0.04),   /* inner top light */
     inset 0 -6px 16px rgba(0, 0, 0, 0.22);     /* inner bottom depth */
 }
-.lid.opened { transform: rotateX(-118deg); }
+.lid.opened {
+  transform: rotateX(118deg);
+  opacity: 0;
+  pointer-events: none;
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: transform 0.85s cubic-bezier(.32, 0, .15, 1),
+              opacity 0.25s ease 0.55s,
+              max-height 0.01s ease 0.85s,
+              padding 0.01s ease 0.85s;
+}
+/* When closing: height/padding restore instantly, opacity returns, then lid rotates */
+.lid:not(.opened) {
+  transition: transform 0.7s cubic-bezier(.32, 0, .15, 1) 0.05s,
+              opacity 0.15s ease,
+              max-height 0.01s ease,
+              padding 0.01s ease;
+}
 
 /* Inner corner reinforcement detail */
 .lid::before {
@@ -326,7 +360,7 @@ body {
 /* ─── Base / Briefcase Interior ───────────────────────────────────────────── */
 .base {
   width: 100%;
-  background: var(--surface-container-low);
+  background: #2b1613;
   background-image: repeating-linear-gradient(180deg,
     rgba(255, 255, 255, 0.016) 0px,
     rgba(255, 255, 255, 0.016) 1px,
@@ -578,33 +612,52 @@ body {
 }
 .open-btn:disabled { opacity: 0.3; cursor: default; transform: none !important; }
 
+/* ─── Body scroll lock when modal is open ────────────────────────────────── */
+body.modal-open { overflow: hidden; }
+
 /* ─── Modal ───────────────────────────────────────────────────────────────── */
 .modal-overlay {
-  display: none;
   position: fixed;
   inset: 0;
-  background: rgba(33, 14, 11, 0.85);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(10, 30, 48, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   z-index: 100;
+  display: flex;
   align-items: center;
   justify-content: center;
+  padding: 24px 16px;
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
-.modal-overlay.open { display: flex; }
+.modal-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
 
 .modal-box {
   background: var(--surface-deep);
   border: 1px solid rgba(227, 193, 153, 0.18);
   border-radius: 12px;
-  width: 90%; max-width: 440px;
+  width: 90%; max-width: 480px;
+  margin: auto;
   position: relative;
-  animation: popIn 0.28s cubic-bezier(.34, 1.4, .64, 1);
   font-family: 'Work Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  max-height: 82vh; overflow-y: auto;
+  max-height: 85vh; overflow-y: auto;
   box-shadow:
-    0 0 80px rgba(33, 14, 11, 0.9),
-    0 16px 40px rgba(33, 14, 11, 0.7);
+    0 0 80px rgba(10, 30, 48, 0.9),
+    0 24px 60px rgba(10, 30, 48, 0.7);
   --folder-accent: var(--primary);
+  opacity: 0;
+  transform: scale(0.94) translateY(20px);
+  transition: opacity 0.32s cubic-bezier(.22, .61, .36, 1),
+              transform 0.32s cubic-bezier(.22, .61, .36, 1);
+}
+.modal-overlay.open .modal-box {
+  opacity: 1;
+  transform: scale(1) translateY(0);
 }
 /* Colored top accent bar (set via JS custom property) */
 .modal-box::before {
@@ -617,10 +670,7 @@ body {
   pointer-events: none;
 }
 
-@keyframes popIn {
-  from { opacity: 0; transform: scale(0.92) translateY(16px) }
-  to   { opacity: 1; transform: scale(1)    translateY(0) }
-}
+/* popIn animation replaced by .modal-box transition for smoother open/close */
 
 .modal-close-btn {
   position: absolute; top: 8px; right: 8px;
@@ -843,19 +893,19 @@ body {
 
 /* ─── Reduced Motion (SKILL.md §7) ───────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .lid { transition: none; }
+  .lid, .lid.opened, .lid:not(.opened) { transition: none; }
+  .handle-outer, .case-wrap:has(.lid.opened) .handle-outer { transition: none; }
   .folder { transition: opacity 0.01ms, transform 0.01ms; filter: none !important; }
   .folder:hover { transform: none !important; filter: none !important; }
   .folder:hover .f-tab { transform: none; }
   .open-btn { transition: none; transform: none !important; }
+  .modal-overlay { transition: none; }
+  .modal-box { transition: none; transform: none; }
+  .modal-overlay.open .modal-box { transform: none; }
   .toast { transition: none; transform: none; }
   .toast--visible { transform: none; }
   .shortcuts-popover { transition: none; transform: none; }
   .shortcuts-popover--visible { transform: none; }
-  @keyframes popIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
 }
 
 /* ─── Responsive — Tablet ─────────────────────────────────────────────────── */
@@ -916,7 +966,7 @@ body {
   #mContent { padding: 0 18px 18px; }
   .modal-num { font-size: 18px; }
   .modal-title-text { font-size: 14px; }
-  .modal-box { border-radius: 10px; max-height: 80vh; }
+  .modal-box { border-radius: 10px; max-height: 88vh; }
 
   .open-btn { margin-top: 16px; padding: 12px 26px; font-size: 10px; }
   .page-footer {
