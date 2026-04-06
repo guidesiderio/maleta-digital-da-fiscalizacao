@@ -65,7 +65,7 @@
       />
       <div class="inst-info">
         <div class="inst-organ">Universidade Federal do Piauí — UFPI</div>
-        <div class="inst-sector">Departamento de Fiscalização de Contratos</div>
+        <div class="inst-sector">Pró-Reitoria de Administração</div>
       </div>
     </header>
 
@@ -76,9 +76,6 @@
 
           <div class="lid" id="lid">
             <h1 class="lid-title">Maleta Digital da Fiscalização</h1>
-            <div class="lid-acervo">
-              Acervo digital de documentos oficiais do Departamento de Fiscalização
-            </div>
             <div class="lid-latch" id="latch"></div>
             <div class="lid-hinges">
               <div class="hinge"></div>
@@ -88,17 +85,6 @@
 
           <div class="base" id="base">
             <div class="folders-row" id="foldersRow"></div>
-            <div class="modal-overlay" id="modalOv">
-              <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="mTitle">
-                <button class="modal-close-btn" id="mClose" aria-label="Fechar">✕</button>
-                <div class="modal-header">
-                  <div class="modal-num" id="mNum"></div>
-                  <h2 class="modal-title-text" id="mTitle"></h2>
-                </div>
-                <hr class="modal-sep" />
-                <div id="mContent"></div>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -107,6 +93,19 @@
     </div>
 
     <footer class="page-footer" id="pageFooter"></footer>
+
+    <!-- Modal moved outside .wrap/.scene/.case-wrap so position:fixed works correctly -->
+    <div class="modal-overlay" id="modalOv">
+      <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+        <button class="modal-close-btn" id="mClose" aria-label="Fechar">✕</button>
+        <div class="modal-header">
+          <div class="modal-num" id="mNum"></div>
+          <h2 class="modal-title-text" id="mTitle"></h2>
+        </div>
+        <hr class="modal-sep" />
+        <div id="mContent"></div>
+      </div>
+    </div>
 
     <script src="js/data.js"></script>
     <script src="js/script.js"></script>

@@ -1,5 +1,5 @@
-const COLORS = ["c1", "c2", "c3", "c4", "c5"];
-const NUM_HEX = ["#cc9a52", "#6d8e60", "#8078bc", "#cc6a48", "#4a9aac"];
+const COLORS = ["c1", "c2", "c3", "c4"];
+const NUM_HEX = ["#cc9a52", "#6d8e60", "#8078bc", "#cc6a48"];
 
 /* ─── Toast Notifications (#3) ──────────────────────────────────────────── */
 const toastContainer = document.createElement("div");
@@ -150,7 +150,6 @@ function openCase(skipAnimation) {
   if (skipAnimation) {
     lid.style.transition = "none";
     lid.classList.add("opened");
-    lid.style.visibility = "hidden";
     folders.forEach((_, i) => {
       const el = document.getElementById(`folder-${i}`);
       el.style.transition = "none";
@@ -192,10 +191,6 @@ function openCase(skipAnimation) {
     if (pBtn) pBtn.style.display = "inline-flex";
     announce("Maleta aberta");
   }, 820);
-
-  setTimeout(() => {
-    lid.style.visibility = "hidden";
-  }, 900);
 }
 
 btn.addEventListener("click", () => {
@@ -220,7 +215,6 @@ function resetCase() {
   folders.forEach((_, i) => {
     document.getElementById(`folder-${i}`).classList.remove("folder--dimmed");
   });
-  lid.style.visibility = "visible";
   setTimeout(() => {
     lid.classList.remove("opened");
     btn.textContent = "▶ Abrir maleta";
@@ -300,6 +294,7 @@ function openModal(i, highlightQuery) {
 
   const overlay = document.getElementById("modalOv");
   overlay.classList.add("open");
+  document.body.classList.add("modal-open");
 
   // Focus trap setup
   const closeBtn = document.getElementById("mClose");
@@ -314,6 +309,7 @@ function openModal(i, highlightQuery) {
 function closeModal() {
   const overlay = document.getElementById("modalOv");
   overlay.classList.remove("open");
+  document.body.classList.remove("modal-open");
   const folderToFocus = currentModalFolder >= 0 ? document.getElementById(`folder-${currentModalFolder}`) : null;
   currentModalFolder = -1;
   removeFocusTrap();
@@ -427,7 +423,7 @@ function toggleShortcutsHelp() {
     <dl class="shortcuts-list">
       <div class="shortcut-row"><dt><kbd>/</kbd> ou <kbd>Ctrl+K</kbd></dt><dd>Buscar documento</dd></div>
       <div class="shortcut-row"><dt><kbd>Esc</kbd></dt><dd>Fechar modal / limpar busca</dd></div>
-      <div class="shortcut-row"><dt><kbd>1</kbd>–<kbd>5</kbd></dt><dd>Abrir pasta correspondente</dd></div>
+      <div class="shortcut-row"><dt><kbd>1</kbd>–<kbd>4</kbd></dt><dd>Abrir pasta correspondente</dd></div>
       <div class="shortcut-row"><dt><kbd>?</kbd></dt><dd>Mostrar/ocultar atalhos</dd></div>
     </dl>
     <button class="shortcuts-close" aria-label="Fechar atalhos">✕</button>
@@ -472,7 +468,7 @@ document.addEventListener("keydown", (e) => {
 
   // 1-5: open folder directly
   const num = parseInt(e.key, 10);
-  if (num >= 1 && num <= 5 && isOpen && currentModalFolder === -1) {
+  if (num >= 1 && num <= 4 && isOpen && currentModalFolder === -1) {
     const idx = num - 1;
     if (idx < folders.length) {
       e.preventDefault();
