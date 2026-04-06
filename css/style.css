@@ -16,11 +16,11 @@
 ──────────────────────────────────────────────────────────────────────────── */
 
 :root {
-  --surface: #210e0b;
-  --surface-container-low: #2b1613;
+  --surface: #0a1e30;
+  --surface-container-low: #112F4E;
   --surface-container: #3a1f1a;
   --surface-container-high: #472f2b;
-  --surface-deep: #1c0d09;
+  --surface-deep: #0a1e30;
   --primary: #e3c199;
   --primary-dark: #c49642;
   --on-primary: #210e0b;
@@ -130,8 +130,8 @@ body {
 .wrap {
   background: var(--surface-container-low);
   background-image:
-    repeating-linear-gradient(90deg, rgba(0,0,0,0.05) 0px, rgba(0,0,0,0.05) 1px, transparent 1px, transparent 32px),
-    repeating-linear-gradient(0deg,  rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 32px);
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.06) 0px, rgba(0,0,0,0.06) 1px, transparent 1px, transparent 32px),
+    repeating-linear-gradient(0deg,  rgba(0,0,0,0.05) 0px, rgba(0,0,0,0.05) 1px, transparent 1px, transparent 32px);
   border-radius: 0;
   border-left:  1px solid var(--outline-variant);
   border-right: 1px solid var(--outline-variant);
@@ -142,8 +142,8 @@ body {
   flex-direction: column;
   align-items: center;
   box-shadow:
-    0 40px 100px rgba(33, 14, 11, 0.75),
-    0  4px  20px rgba(33, 14, 11, 0.5);
+    0 40px 100px rgba(10, 30, 48, 0.75),
+    0  4px  20px rgba(10, 30, 48, 0.5);
 }
 
 /* ─── Scene / 3D Container ────────────────────────────────────────────────── */
@@ -209,6 +209,10 @@ body {
   border-radius: 12px 12px 0 0;
   padding: 32px 0 26px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   transform-origin: bottom center;
   transform: rotateX(0deg);
   transition: transform 0.9s cubic-bezier(.4, 0, .2, 1);
@@ -243,16 +247,6 @@ body {
   line-height: 1.15;
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
   padding: 0 20px;
-}
-.lid-acervo {
-  font-family: 'Work Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  font-size: 11px;
-  font-weight: 400;
-  color: rgba(227, 193, 153, 0.58);
-  letter-spacing: 0.06em;
-  margin-top: 14px;
-  padding: 0 32px;
-  line-height: 1.7;
 }
 
 /* ─── Latch ───────────────────────────────────────────────────────────────── */
@@ -529,9 +523,6 @@ body {
 .c4 .f-body { background: linear-gradient(180deg, #b4a494 0%, #a09080 100%) }
 .c4 .f-num  { color: #463830 }
 
-.c5 .f-tab  { background: linear-gradient(180deg, #ccbf74 0%, #b8aa60 100%) }
-.c5 .f-body { background: linear-gradient(180deg, #d8ca80 0%, #c4b66c 100%) }
-.c5 .f-num  { color: #524818 }
 
 /* ─── Base Footer Stamp ───────────────────────────────────────────────────── */
 .base-footer {
@@ -874,7 +865,6 @@ body {
   .inst-organ { font-size: 13px; }
   .wrap { padding: 28px 16px 32px; }
   .lid { padding: 26px 0 22px; }
-  .lid-acervo { font-size: 10px; padding: 0 20px; margin-top: 10px; }
   .open-btn { margin-top: 22px; padding: 13px 36px; font-size: 10px; }
   .modal-box { max-width: 96%; }
 }
@@ -889,7 +879,6 @@ body {
 
   .wrap { padding: 20px 12px 24px; }
   .lid { padding: 22px 0 18px; }
-  .lid-acervo { font-size: 9px; padding: 0 14px; margin-top: 8px; }
 
   /* Horizontal scroll with snap for 5 folders */
   .folders-row {

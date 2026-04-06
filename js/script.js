@@ -1,5 +1,5 @@
-const COLORS = ["c1", "c2", "c3", "c4", "c5"];
-const NUM_HEX = ["#cc9a52", "#6d8e60", "#8078bc", "#cc6a48", "#4a9aac"];
+const COLORS = ["c1", "c2", "c3", "c4"];
+const NUM_HEX = ["#cc9a52", "#6d8e60", "#8078bc", "#cc6a48"];
 
 /* ─── Toast Notifications (#3) ──────────────────────────────────────────── */
 const toastContainer = document.createElement("div");
@@ -427,7 +427,7 @@ function toggleShortcutsHelp() {
     <dl class="shortcuts-list">
       <div class="shortcut-row"><dt><kbd>/</kbd> ou <kbd>Ctrl+K</kbd></dt><dd>Buscar documento</dd></div>
       <div class="shortcut-row"><dt><kbd>Esc</kbd></dt><dd>Fechar modal / limpar busca</dd></div>
-      <div class="shortcut-row"><dt><kbd>1</kbd>–<kbd>5</kbd></dt><dd>Abrir pasta correspondente</dd></div>
+      <div class="shortcut-row"><dt><kbd>1</kbd>–<kbd>4</kbd></dt><dd>Abrir pasta correspondente</dd></div>
       <div class="shortcut-row"><dt><kbd>?</kbd></dt><dd>Mostrar/ocultar atalhos</dd></div>
     </dl>
     <button class="shortcuts-close" aria-label="Fechar atalhos">✕</button>
@@ -472,7 +472,7 @@ document.addEventListener("keydown", (e) => {
 
   // 1-5: open folder directly
   const num = parseInt(e.key, 10);
-  if (num >= 1 && num <= 5 && isOpen && currentModalFolder === -1) {
+  if (num >= 1 && num <= 4 && isOpen && currentModalFolder === -1) {
     const idx = num - 1;
     if (idx < folders.length) {
       e.preventDefault();
