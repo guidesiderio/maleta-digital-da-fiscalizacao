@@ -219,12 +219,8 @@ body {
   border-top-color: rgba(227, 193, 153, 0.28); /* stronger top-edge highlight */
   border-bottom: none;
   border-radius: 12px 12px 0 0;
-  padding: 32px 0 26px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  padding: 0;
+  min-height: 130px;
   transform-origin: bottom center;
   transform: rotateX(0deg);
   max-height: 500px;
@@ -271,7 +267,7 @@ body {
 }
 
 /* ─── Lid Typography ──────────────────────────────────────────────────────── */
-/* Título longo — usa clamp para escalar entre mobile e desktop sem overflow */
+/* Título centralizado dentro do .base (position: relative, sem 3D transforms) */
 .lid-title {
   font-family: 'Noto Serif', Georgia, 'Times New Roman', serif;
   font-size: clamp(1.45rem, 5.5vw, 2.6rem);
@@ -280,7 +276,19 @@ body {
   letter-spacing: 0.06em;
   line-height: 1.15;
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
-  padding: 0 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 48px);
+  text-align: center;
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+/* Oculta o título quando a maleta abre */
+.case-wrap:has(.lid.opened) .lid-title {
+  opacity: 0;
 }
 
 /* ─── Latch ───────────────────────────────────────────────────────────────── */
@@ -914,7 +922,7 @@ body.modal-open { overflow: hidden; }
   .inst-header { padding: 16px 20px 16px 22px; gap: 14px; }
   .inst-organ { font-size: 13px; }
   .wrap { padding: 28px 16px 32px; }
-  .lid { padding: 26px 0 22px; }
+  .lid { padding: 0; min-height: 110px; }
   .open-btn { margin-top: 22px; padding: 13px 36px; font-size: 10px; }
   .modal-box { max-width: 96%; }
 }
@@ -928,7 +936,7 @@ body.modal-open { overflow: hidden; }
   .inst-sector { font-size: 8px; }
 
   .wrap { padding: 20px 12px 24px; }
-  .lid { padding: 22px 0 18px; }
+  .lid { padding: 0; min-height: 90px; }
 
   /* Horizontal scroll with snap for 5 folders */
   .folders-row {

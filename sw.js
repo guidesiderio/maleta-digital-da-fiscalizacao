@@ -1,5 +1,5 @@
 // ⚠️ Sincronizar com LAST_UPDATED em js/data.js ao atualizar conteúdo
-const CACHE_NAME = 'maleta-2026-03-31';
+const CACHE_NAME = 'maleta-2026-04-07';
 
 const SHELL = [
   './',
