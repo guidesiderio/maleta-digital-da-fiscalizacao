@@ -385,25 +385,13 @@ function handleHash() {
 
 window.addEventListener("hashchange", handleHash);
 
-/* ─── Auto-open on recurring visits (#8) ─────────────────────────────────── */
-(function autoOpen() {
+/* ─── Deep-link on load ──────────────────────────────────────────────────── */
+(function onLoadHash() {
   const hasHash = window.location.hash && window.location.hash.match(/^#pasta-/);
   if (hasHash) {
-    // Deep link takes priority
     handleHash();
-    sessionStorage.setItem("maletaVisited", "1");
-    return;
-  }
-  if (sessionStorage.getItem("maletaVisited")) {
-    openCase(true);
   }
 })();
-
-// Mark visited after first manual open
-const origOpenCase = openCase;
-btn.addEventListener("click", () => {
-  sessionStorage.setItem("maletaVisited", "1");
-});
 
 /* ─── Keyboard Shortcuts (#7) ───────────────────────────────────────────── */
 function isTyping() {
