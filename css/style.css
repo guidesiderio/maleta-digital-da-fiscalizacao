@@ -6,10 +6,10 @@
 /* Fontes carregadas de forma assíncrona via <link> no index.html (#14) */
 
 /* ─── Design Tokens (DESIGN.md §2) ──────────────────────────────────────────
-   surface              : #210e0b  Dark Wood base
-   surface-container-low: #2b1613
-   surface-container    : #3a1f1a
-   surface-container-high:#472f2b
+   surface              : #0a1e30  Dark Navy base
+   surface-container-low: #112f4e  Navy
+   surface-container    : #3a1f1a  Dark Wood
+   surface-container-high:#472f2b  Wood
    primary              : #e3c199  Beige/Tan
    primary-dark         : #c49642
    ghost-border         : rgba(227,193,153,0.15)
@@ -1199,10 +1199,14 @@ body.modal-open {
   }
 }
 
-/* ─── Responsive — Mobile (scroll-snap for 5 folders) ────────────────────── */
+/* ─── Responsive — Mobile (scroll-snap for 4 folders) ────────────────────── */
 @media (max-width: 520px) {
   body {
     padding: 16px 10px 32px;
+  }
+
+  .scene {
+    max-width: 100%;
   }
 
   .inst-header {
@@ -1214,11 +1218,13 @@ body.modal-open {
     font-size: 12px;
   }
   .inst-sector {
-    font-size: 8px;
+    font-size: 9px;
   }
 
   .wrap {
     padding: 20px 12px 24px;
+    max-width: 100%;
+    overflow: hidden;
   }
   .lid {
     padding: 22px 0 18px;
@@ -1230,10 +1236,10 @@ body.modal-open {
     margin-top: 8px;
   }
 
-  /* Horizontal scroll with snap for 5 folders */
+  /* Horizontal scroll with snap for 4 folders (only when briefcase is open) */
   .folders-row {
     flex-wrap: nowrap;
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: visible;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
@@ -1242,6 +1248,18 @@ body.modal-open {
     gap: 12px;
     scrollbar-width: thin;
     scrollbar-color: rgba(227, 193, 153, 0.2) transparent;
+  }
+  /* When open: enable horizontal scroll for folders */
+  .case-wrap:has(.lid.opened) .folders-row {
+    overflow-x: auto;
+    max-height: none;
+    padding-bottom: 10px;
+  }
+  /* When closed: collapse folders-row to eliminate wasted vertical space */
+  .case-wrap:not(:has(.lid.opened)) .folders-row {
+    max-height: 0;
+    padding-bottom: 0;
+    overflow: hidden;
   }
   .folders-row::-webkit-scrollbar {
     height: 3px;
@@ -1252,6 +1270,10 @@ body.modal-open {
   .folders-row::-webkit-scrollbar-thumb {
     background: rgba(227, 193, 153, 0.25);
     border-radius: 2px;
+  }
+  .folders-row::after {
+    content: "";
+    flex: 0 0 1px;
   }
   .folder {
     flex: 0 0 100px;
@@ -1276,8 +1298,8 @@ body.modal-open {
   }
 
   .base {
-    padding: 16px 12px 16px;
-    min-height: 160px;
+    padding: 20px 12px 18px;
+    min-height: 120px;
   }
 
   .modal-header {
@@ -1309,8 +1331,11 @@ body.modal-open {
     flex-direction: column;
     gap: 5px;
     padding: 10px 16px;
-    font-size: 7px;
+    font-size: 9px;
     border-radius: 0 0 8px 8px;
+  }
+  .doc-btn {
+    min-height: 44px;
   }
 }
 

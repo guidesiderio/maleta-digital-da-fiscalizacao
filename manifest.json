@@ -1,11 +1,11 @@
 {
   "name": "Maleta Digital da Fiscalização — UFPI",
   "short_name": "Maleta Digital",
-  "description": "Acervo digital de documentos oficiais do Departamento de Fiscalização de Contratos da UFPI.",
+  "description": "Acervo digital de documentos oficiais da Pró-Reitoria de Administração da UFPI.",
   "start_url": "./index.html",
   "display": "standalone",
-  "theme_color": "#210e0b",
-  "background_color": "#210e0b",
+  "theme_color": "#112F4E",
+  "background_color": "#0a1e30",
   "icons": [
     {
       "src": "assets/img/logo-ufpi.png",

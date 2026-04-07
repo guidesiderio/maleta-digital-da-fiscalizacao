@@ -162,6 +162,7 @@ function openCase(skipAnimation) {
     isOpen = true;
     btn.disabled = false;
     btn.textContent = "↺ Fechar maleta";
+    btn.setAttribute("aria-label", "Fechar maleta");
     searchWrap.classList.add("visible");
     const pBtn = document.getElementById("printIndexBtn");
     if (pBtn) pBtn.style.display = "inline-flex";
@@ -189,6 +190,7 @@ function openCase(skipAnimation) {
     isOpen = true;
     btn.disabled = false;
     btn.textContent = "↺ Fechar maleta";
+    btn.setAttribute("aria-label", "Fechar maleta");
     searchWrap.classList.add("visible");
     const pBtn = document.getElementById("printIndexBtn");
     if (pBtn) pBtn.style.display = "inline-flex";
@@ -221,6 +223,7 @@ function resetCase() {
   setTimeout(() => {
     lid.classList.remove("opened");
     btn.textContent = "▶ Abrir maleta";
+    btn.setAttribute("aria-label", "Abrir maleta");
     isOpen = false;
     if (lidTitle) lidTitle.style.opacity = "1";
     history.replaceState(null, "", window.location.pathname);
