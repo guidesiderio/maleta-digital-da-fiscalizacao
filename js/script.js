@@ -142,10 +142,13 @@ let isOpen = false;
 const btn = document.getElementById("openBtn");
 const lid = document.getElementById("lid");
 
+const lidTitle = document.querySelector(".lid-title");
+
 function openCase(skipAnimation) {
   if (isOpen) return;
 
   btn.disabled = true;
+  if (lidTitle) lidTitle.style.opacity = "0";
 
   if (skipAnimation) {
     lid.style.transition = "none";
@@ -219,6 +222,7 @@ function resetCase() {
     lid.classList.remove("opened");
     btn.textContent = "▶ Abrir maleta";
     isOpen = false;
+    if (lidTitle) lidTitle.style.opacity = "1";
     history.replaceState(null, "", window.location.pathname);
     announce("Maleta fechada");
   }, 200);
