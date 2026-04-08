@@ -29,35 +29,44 @@ self.addEventListener('activate', (e) => {
   self.clients.claim();
 });
 
-// Network-first for PDFs (always try fresh), cache-first for shell assets
+// Network-first for shell assets (HTML, JS, CSS) and PDFs — always try fresh.
+// Cache-first only for static assets that rarely change (images, icons, fonts).
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
 
-  if (url.pathname.endsWith('.pdf')) {
-    // Network first, fallback to cache for PDFs
+  // Only handle same-origin requests
+  if (url.origin !== self.location.origin) return;
+
+  const path = url.pathname;
+  const isStatic = /\.(png|jpe?g|gif|svg|ico|webp|woff2?|ttf|eot)$/i.test(path);
+
+  if (isStatic) {
+    // Cache first for images, icons, fonts (rarely change)
     e.respondWith(
-      fetch(e.request)
-        .then((res) => {
-          const clone = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
+      caches.match(e.request).then((cached) => {
+        if (cached) return cached;
+        return fetch(e.request).then((res) => {
+          if (res.ok) {
+            const clone = res.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
+          }
           return res;
-        })
-        .catch(() => caches.match(e.request))
+        });
+      })
     );
     return;
   }
 
-  // Cache first for shell assets
+  // Network first for everything else (HTML, JS, CSS, PDFs, manifest)
   e.respondWith(
-    caches.match(e.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(e.request).then((res) => {
-        if (res.ok && url.origin === self.location.origin) {
+    fetch(e.request)
+      .then((res) => {
+        if (res.ok) {
           const clone = res.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
         }
         return res;
-      });
-    })
+      })
+      .catch(() => caches.match(e.request))
   );
 });

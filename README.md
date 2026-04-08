@@ -111,9 +111,16 @@ Por ser um projeto estático sem build, também funciona diretamente no GitHub P
 2. Selecione a branch `main` e a pasta `/ (root)`
 3. Salve e aguarde o deploy
 
-### Observações sobre cache
+### Cache
 
-Após cada deploy com alteração de conteúdo, os usuários devem limpar o cache do navegador com **Ctrl+Shift+R** (hard refresh) para garantir que a versão mais recente seja carregada. O Service Worker também detecta novas versões automaticamente e exibe um toast informando "Nova versão disponível!".
+O cache está configurado para que alterações sejam refletidas automaticamente após cada deploy, sem necessidade de Ctrl+Shift+R:
+
+- **HTML, JS, CSS, SW e manifest** — `Cache-Control: no-cache, no-store, must-revalidate` via `vercel.json`, garantindo que o navegador sempre busque a versão mais recente
+- **Imagens e ícones** — cache longo (1 ano, `immutable`) pois raramente mudam
+- **PDFs** — cache de 30 dias
+- **Service Worker** — usa estratégia **network-first** para HTML/JS/CSS (busca na rede primeiro, usa cache apenas como fallback offline) e cache-first apenas para imagens/ícones
+
+Quando uma nova versão do Service Worker é ativada, um toast "Nova versão disponível!" é exibido automaticamente.
 
 ## Tecnologias
 
@@ -122,7 +129,7 @@ Após cada deploy com alteração de conteúdo, os usuários devem limpar o cach
 | HTML5 | Estrutura semântica com ARIA |
 | CSS3 | Design system com custom properties, transforms 3D, animações, `@media print` |
 | JavaScript (vanilla) | Lógica de interação, busca, deep linking, PWA |
-| Service Worker | Cache offline (cache-first para shell, network-first para PDFs) |
+| Service Worker | Cache offline (network-first para shell, cache-first para imagens) |
 | PWA Manifest | Instalação como app standalone |
 | Google Fonts | Noto Serif, Work Sans, Space Grotesk |
 | Vercel | Hospedagem com deploy automático e headers de segurança |
