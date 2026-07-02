@@ -60,49 +60,49 @@ const folders = [
       {
         title: "Fluxo de Acréscimo",
         file: "assets/docs/Procedimentos/Fluxo de acréscimo.pdf",
-        description: "Procedimento para acréscimo contratual (quantitativo).",
+        description: "Fluxo de acréscimo contratual por termo aditivo: dotação orçamentária, análise de conformidade, parecer jurídico (PGF) e publicação no DOU.",
         date: "2026-07-01",
         size: "32 KB"
       },
       {
         title: "Fluxo de Supressão",
         file: "assets/docs/Procedimentos/Fluxo de supressão.pdf",
-        description: "Procedimento para supressão contratual (quantitativo).",
+        description: "Fluxo de supressão contratual por termo aditivo: elaboração da minuta, análise de conformidade, parecer jurídico (PGF) e publicação no DOU.",
         date: "2026-07-01",
         size: "24 KB"
       },
       {
         title: "Fluxo de Apuração de Descumprimento",
         file: "assets/docs/Procedimentos/fluxo de apuração de descumprimento.pdf",
-        description: "Procedimento para apuração de descumprimento contratual.",
+        description: "Fluxo de apuração de descumprimento contratual: instauração de processo administrativo, defesa, aplicação de sanção e recurso.",
         date: "2026-07-01",
         size: "55 KB"
       },
       {
         title: "Fluxo de Movimentação de Conta Vinculada",
         file: "assets/docs/Procedimentos/FLUXO MOVIMENTAÇÃO CONTA VINCULADA_page-0001.pdf",
-        description: "Procedimento para movimentação de conta vinculada em contratos.",
+        description: "Fluxo de movimentação de conta vinculada: solicitação da contratada, análise da fiscalização, tramitação DICAF/CCON e movimentação pela instituição financeira.",
         date: "2026-07-01",
         size: "58 KB"
       },
       {
         title: "Fluxo de Prorrogação de Contratos",
         file: "assets/docs/Procedimentos/prorrogacaoContratos.pdf",
-        description: "Fluxo do processo de prorrogação de contratos.",
+        description: "Fluxo de prorrogação contratual iniciado 6 meses antes do encerramento, com atesto de vantajosidade e ritos específicos para contratos SEMO e DEMO.",
         date: "2026-07-01",
         size: "44 KB"
       },
       {
         title: "Fluxo de Reajuste",
         file: "assets/docs/Procedimentos/reajuste.pdf",
-        description: "Procedimento para reajuste de contratos administrativos.",
+        description: "Fluxo de reajuste contratual por termo de apostilamento: cálculo, pesquisa de preços, ateste de vantajosidade e publicação no DOU.",
         date: "2026-07-01",
         size: "39 KB"
       },
       {
         title: "Fluxo de Repactuação",
         file: "assets/docs/Procedimentos/repactuação.pdf",
-        description: "Procedimento para repactuação de contratos de serviços.",
+        description: "Fluxo de repactuação contratual por termo aditivo ou apostilamento: análise de planilhas, conformidade, parecer jurídico (PGF) e publicação no DOU.",
         date: "2026-07-01",
         size: "49 KB"
       }
