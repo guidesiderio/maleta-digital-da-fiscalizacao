@@ -1,4 +1,4 @@
-const LAST_UPDATED = "2026-04-07";
+const LAST_UPDATED = "2026-07-01";
 
 const folders = [
   {
@@ -58,74 +58,53 @@ const folders = [
     name: "Procedimentos",
     docs: [
       {
+        title: "Fluxo de Acréscimo",
+        file: "assets/docs/Procedimentos/Fluxo de acréscimo.pdf",
+        description: "Procedimento para acréscimo contratual (quantitativo).",
+        date: "2026-07-01",
+        size: "32 KB"
+      },
+      {
+        title: "Fluxo de Supressão",
+        file: "assets/docs/Procedimentos/Fluxo de supressão.pdf",
+        description: "Procedimento para supressão contratual (quantitativo).",
+        date: "2026-07-01",
+        size: "24 KB"
+      },
+      {
         title: "Fluxo de Apuração de Descumprimento",
-        file: "assets/docs/Procedimentos/FLUXO APURAÇÃO DE DESCUMPRIMENTO.pdf",
+        file: "assets/docs/Procedimentos/fluxo de apuração de descumprimento.pdf",
         description: "Procedimento para apuração de descumprimento contratual.",
-        date: "2026-04-01",
-        size: ""
-      },
-      {
-        title: "Fluxo de Alteração Contratual",
-        file: "assets/docs/Procedimentos/Fluxo de Alteração Contratual.pdf",
-        description: "Fluxo do processo de alteração contratual.",
-        date: "2026-04-01",
-        size: ""
-      },
-      {
-        title: "Fluxo de Contrato acima de 12 meses",
-        file: "assets/docs/Procedimentos/Fluxo de Contrato_+12meses.pdf",
-        description: "Procedimento aplicável a contratos com vigência superior a 12 meses.",
-        date: "2026-04-01",
-        size: ""
-      },
-      {
-        title: "Fluxo de Prorrogação — DEMO",
-        file: "assets/docs/Procedimentos/Fluxo de Prorrogação (DEMO).pdf",
-        description: "Fluxo de prorrogação contratual para contratos DEMO.",
-        date: "2026-04-01",
-        size: ""
-      },
-      {
-        title: "Fluxo de Prorrogação — SEMO",
-        file: "assets/docs/Procedimentos/Fluxo de Prorrogação (SEMO).pdf",
-        description: "Fluxo de prorrogação contratual para contratos SEMO.",
-        date: "2026-04-01",
-        size: ""
-      },
-      {
-        title: "Fluxo de Reajuste",
-        file: "assets/docs/Procedimentos/Fluxo de Reajuste.pdf",
-        description: "Procedimento para reajuste de contratos administrativos.",
-        date: "2026-04-01",
-        size: ""
-      },
-      {
-        title: "Fluxo de Repactuação",
-        file: "assets/docs/Procedimentos/Fluxo de Repactuação.pdf",
-        description: "Procedimento para repactuação de contratos de serviços.",
-        date: "2026-04-01",
-        size: ""
-      },
-      {
-        title: "Fluxo de Revisão",
-        file: "assets/docs/Procedimentos/Fluxo de Revisão.pdf",
-        description: "Fluxo de revisão de contratos administrativos.",
-        date: "2026-04-01",
-        size: ""
+        date: "2026-07-01",
+        size: "55 KB"
       },
       {
         title: "Fluxo de Movimentação de Conta Vinculada",
-        file: "assets/docs/Procedimentos/FLUXO MOVIMENTAÇÃO CONTA VINCULADA.pdf",
+        file: "assets/docs/Procedimentos/FLUXO MOVIMENTAÇÃO CONTA VINCULADA_page-0001.pdf",
         description: "Procedimento para movimentação de conta vinculada em contratos.",
-        date: "2026-04-01",
-        size: ""
+        date: "2026-07-01",
+        size: "58 KB"
       },
       {
-        title: "Fluxo de Ressarcimento",
-        file: "assets/docs/Procedimentos/FLUXO RESSARCIMENTO.pdf",
-        description: "Procedimento de ressarcimento no âmbito da fiscalização contratual.",
-        date: "2026-04-01",
-        size: ""
+        title: "Fluxo de Prorrogação de Contratos",
+        file: "assets/docs/Procedimentos/prorrogacaoContratos.pdf",
+        description: "Fluxo do processo de prorrogação de contratos.",
+        date: "2026-07-01",
+        size: "44 KB"
+      },
+      {
+        title: "Fluxo de Reajuste",
+        file: "assets/docs/Procedimentos/reajuste.pdf",
+        description: "Procedimento para reajuste de contratos administrativos.",
+        date: "2026-07-01",
+        size: "39 KB"
+      },
+      {
+        title: "Fluxo de Repactuação",
+        file: "assets/docs/Procedimentos/repactuação.pdf",
+        description: "Procedimento para repactuação de contratos de serviços.",
+        date: "2026-07-01",
+        size: "49 KB"
       }
     ]
   }
